@@ -22,7 +22,10 @@ EXTENSIONS = {".db", ".sqlite", ".sqlite3"}
 def check_new_file(path: str, name: str) -> Path:
     if path.startswith("file:") or "://" in path:
         raise ValueError(f"{name} must be a local file path, not a database URL")
-    dest = Path(path).expanduser().resolve(strict=False)
+    raw = Path(path).expanduser().absolute()
+    if raw.exists() or raw.is_symlink():
+        raise ValueError(f"{name} already exists; refusing overwrite")
+    dest = raw.resolve(strict=False)
     if dest.suffix.lower() not in (EXTENSIONS if name == "output" else {".json"}):
         raise ValueError(f"{name} must end in the expected local file extension")
     if dest.exists() or dest.is_symlink():
@@ -91,6 +94,7 @@ def prepare_local_clone(
     fd = os.open(destination, os.O_RDWR | os.O_CREAT | os.O_EXCL, 0o600)
     os.close(fd)
     successful = False
+    report_created = False
     try:
         source_cx, _ = connect_read_only(source)
         dest_cx = sqlite3.connect(str(destination))
@@ -135,7 +139,9 @@ def prepare_local_clone(
         }
         # x mode avoids report overwrites; caller stores this privately.
         import json
-        with report_path.open("x", encoding="utf-8") as handle:
+        report_fd = os.open(report_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        report_created = True
+        with os.fdopen(report_fd, "w", encoding="utf-8") as handle:
             json.dump(result, handle, indent=2, ensure_ascii=False)
             handle.write("\n")
         successful = True
@@ -143,7 +149,8 @@ def prepare_local_clone(
     finally:
         if not successful:
             destination.unlink(missing_ok=True)
-            report_path.unlink(missing_ok=True)
+            if report_created:
+                report_path.unlink(missing_ok=True)
 
 
 def main() -> int:

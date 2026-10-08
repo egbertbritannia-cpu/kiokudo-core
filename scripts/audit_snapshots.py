@@ -60,8 +60,20 @@ def inspect(path: str):
     cx, file = connect_read_only(path)
     try:
         tables = [r[0] for r in cx.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name"
+            "SELECT name FROM sqlite_master WHERE type='table' "
+            "AND (name NOT LIKE 'sqlite_%' OR name = 'sqlite_sequence') ORDER BY name"
         )]
+        # Capture raw DDL including CHECK constraints, views, expression-index SQL
+        # and triggers, not just column/foreign-key/index summaries.
+        schema_objects = [
+            {"type": typ, "name": name, "table": tbl, "sql": sql}
+            for typ, name, tbl, sql in cx.execute(
+                "SELECT type,name,tbl_name,sql FROM sqlite_master "
+                "WHERE (name NOT LIKE 'sqlite_%' OR name = 'sqlite_sequence') "
+                "AND tbl_name <> ? ORDER BY type,name",
+                ("kiokudo_deployment_identity",),
+            )
+        ]
         issues = []
         if not MANDATORY.issubset(tables):
             issues.append("Missing required tables: " + ",".join(sorted(MANDATORY - set(tables))))
@@ -97,7 +109,7 @@ def inspect(path: str):
                 file_sha.update(chunk)
         return {
             "file_name": file.name, "file_sha256": file_sha.hexdigest(),
-            "tables": result, "issues": issues,
+            "tables": result, "issues": issues, "schema_objects": schema_objects,
             "staging_identity_table_present": "kiokudo_deployment_identity" in tables,
         }
     finally:
@@ -121,6 +133,8 @@ def compare(baseline: dict, candidate: dict):
                 if key in ("count", "sha256"):
                     diff.update({"baseline": a[key], "staging": b[key]})
                 diffs.append(diff)
+    if baseline["schema_objects"] != candidate["schema_objects"]:
+        diffs.append({"table": "*", "kind": "schema_objects"})
     if not candidate["staging_identity_table_present"]:
         diffs.append({"table": "kiokudo_deployment_identity", "kind": "staging_marker_table_missing"})
     return {
@@ -155,7 +169,10 @@ def main():
         out = Path(args.report)
         if out.exists():
             raise ValueError("Report already exists; refusing overwrite")
-        out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        import os
+        fd = os.open(out, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            stream.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
         print("PASS" if report["passed"] else "FAIL",
               "- snapshot content/schema parity (report: " + str(out) + ")")
         sys.exit(0 if report["passed"] else 1)

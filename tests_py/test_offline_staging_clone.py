@@ -63,6 +63,8 @@ class CloneRehearsalTests(unittest.TestCase):
             with self.assertRaises(sqlite3.IntegrityError):
                 cx.execute("INSERT INTO review_logs VALUES ('bad','original-card','invalid',1)")
         self.assertTrue(self.report.is_file())
+        self.assertEqual(self.report.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(self.out.stat().st_mode & 0o777, 0o600)
 
     def test_wrong_checksum_cannot_create_clone_or_report(self):
         with self.assertRaisesRegex(ValueError, "checksum"):
