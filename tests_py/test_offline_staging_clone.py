@@ -111,6 +111,13 @@ class CloneRehearsalTests(unittest.TestCase):
         with sqlite3.connect(self.out) as cx:
             self.assertEqual(cx.execute("SELECT COUNT(*) FROM review_logs").fetchone()[0], 1)
 
+    def test_rejects_uncheckpointed_wal_sidecar(self):
+        (self.folder / "baseline.db-wal").write_bytes(b"uncheckpointed-wal")
+        with self.assertRaisesRegex(ValueError, "WAL/SHM"):
+            self.clone()
+        self.assertFalse(self.out.exists())
+        self.assertEqual(local_clone.file_digest(self.src), self.sha)
+
     def test_rejects_already_marked_baseline(self):
         with sqlite3.connect(self.src) as cx:
             cx.execute("CREATE TABLE kiokudo_deployment_identity(environment TEXT PRIMARY KEY,marker TEXT NOT NULL)")
