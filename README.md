@@ -1,7 +1,28 @@
-# Kiokudo Core
+# 記憶道 — Kiokudo Core
 
-Backend for Kiokudo — Fastify / TypeScript / Turso / Drizzle.
+> Independent backend service for Kiokudo. **Bootstrap only; not yet the production API.**
 
-> **Migration status: bootstrap in progress.** Existing production routes and database writes remain owned by [`japanese-srs-system`](https://github.com/egbertbritannia-cpu/japanese-srs-system) until verified migration.
+## Technology
 
-This repository will host the canonical ReviewService/FSRS mutation path, persistent learning APIs, integration adapters, and operational imports. No public card-creation mutation is planned.
+Node.js 22+, TypeScript, Fastify 5. Existing Turso/Drizzle and canonical server-side FSRS ReviewService will be migrated in phases; these business endpoints are **not implemented in this bootstrap**.
+
+## Run
+
+```bash
+npm install
+cp .env.example .env
+# Set KIOKUDO_SERVICE_TOKEN to a long random string.
+npm run dev
+```
+
+- `GET /api/v1/health` — public liveness, no sensitive data.
+- `GET /api/v1/status` — authenticated bootstrap status, does not mean data/reviews have been migrated.
+- All other `/api/v1/*` routes return 404 until explicitly implemented, tested and approved.
+
+Run `npm test`, `npm run check`, `npm run build` before deployment.
+
+**Security:** API uses a server-side service credential. No browser should call this backend directly. Set the *same* credential as `KIOKUDO_CORE_SERVICE_TOKEN` in the web BFF. Never use `NEXT_PUBLIC_*` for secrets or expose Turso/Google credentials to the web app.
+
+**Migration:** [Scope and gates](./docs/MIGRATION.md) and [REST contract](./contracts/openapi.yaml).
+
+Legacy baseline (still production): [japanese-srs-system](https://github.com/egbertbritannia-cpu/japanese-srs-system).

@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: Kiokudo Core
+  version: 0.1.0-bootstrap
+  description: Bootstrap API only. Review, cards, curriculum, IELTS and Google endpoints are not yet available.
+servers:
+  - url: https://api.example.invalid
+paths:
+  /api/v1/health:
+    get:
+      summary: Liveness only, not readiness
+      responses:
+        '200':
+          description: API process is reachable
+  /api/v1/status:
+    get:
+      summary: Authenticated bootstrap migration status
+      security:
+        - ServiceBearer: []
+      responses:
+        '200':
+          description: Current migration phase; does not guarantee data availability
+        '401':
+          description: Missing or invalid service credential
+components:
+  securitySchemes:
+    ServiceBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
