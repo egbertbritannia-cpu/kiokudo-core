@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import { createStagingDatabaseFromEnv, type DatabaseConnection } from './db/client.js';
 import { registerReviewRoutes } from './routes/reviews.js';
 import { registerCardsRoutes } from './routes/cards.js';
+import { verifyStagingDatabaseIdentity } from './db/staging-identity.js';
 
 export interface AppOptions {
   serviceToken?: string;
@@ -21,7 +22,16 @@ export function buildApp(options: AppOptions = {}) {
   const db = connection?.db;
 
   const app = Fastify({ logger: options.logger ?? false, trustProxy: false });
-  if (ownedConnection) app.addHook('onClose', async () => { ownedConnection.client.close(); });
+  if (ownedConnection) {
+    // Fastify onReady runs before listen / inject; no review handler is served
+    // until the actual database marker is confirmed via a read-only query.
+    app.addHook('onReady', async () => {
+      await verifyStagingDatabaseIdentity(
+        ownedConnection.client, process.env.KIOKUDO_EXPECTED_STAGING_MARKER!,
+      );
+    });
+    app.addHook('onClose', async () => { ownedConnection.client.close(); });
+  }
 
   app.addHook('onRequest', async (request, reply) => {
     if (request.url.split('?')[0] === '/api/v1/health') return;

@@ -1,45 +1,42 @@
-# Kiokudo Core — Phase 2 migration gates
+# Kiokudo Core — Migration gates
 
-Baseline: `egbertbritannia-cpu/japanese-srs-system` commit `3348f4ee49c9539fb9ea60c96e42833811c325ca`.
+Legacy baseline: `japanese-srs-system` @ `3348f4ee49c9539fb9ea60c96e42833811c325ca`.
 
-## Implemented in this branch (staging-only)
+## Implemented (no production cutover)
+- Fastify REST API with server-only Bearer service token.
+- Canonical Drizzle table definitions, typed cards reads, server-side FSRS
+  review transitions, event ID idempotency and transaction-only batch replay.
+- Safe local import rehearsal of tracked 256 JPD133 + 60 N5 JSON rows, 22
+  missing readings retained and audited. This is **NOT** production data.
+- GitHub Actions end-to-end integration with Web on isolated SQLite.
+- DB-resident staging marker checked in Fastify `onReady` before accepting
+  requests. No remote DB marker DDL is performed automatically.
+- Read-only comparison of **checkpointed exports**: all application tables,
+  definitions, indexes, foreign keys, count and row-value hashes.
+- Pure FSRS scheduling reference parity against exact legacy source commit.
+  See [scope / exclusions](FSRS_PARITY_SCOPE.md).
 
-- Exact Drizzle schema port: `src/db/schema.ts` (legacy source preserved).
-- Explicit local/staging libSQL connection. `KIOKUDO_DATABASE_SCOPE=staging` required to open a configured URL.
-- Fastify `GET /api/v1/cards`, `POST /api/v1/reviews`, `POST /api/v1/reviews/batch`.
-- Canonical ts-fsrs scheduling plus immutable review events, single-transaction DB mutations and sorted offline batch replay.
-- Mock-free integration tests against fresh temporary SQLite files, including duplicate replay and forced DB failure.
-
-## Invariants / intended differences
-
-- The new service never retries a failed transaction outside of a transaction. Legacy version caught arbitrary transaction failures and applied changes using a non-atomic fallback.
-- Browser `scheduledDays` is ignored; FSRS server transition is authoritative.
-- Duplicate event IDs with a different card/rating/reviewedAt are rejected (409).
-- Batch replay requires stable event IDs; all successful entries are committed atomically.
-- No on-demand synthetic grammar card insertion or Add Card. Grammar-practice migration must map to genuine persistent card IDs first.
-- No production DB credentials have been installed; without explicit staging DB, the API returns 503 for business routes.
-- These endpoints are not a production drop-in replacement until cross-repo integration, data reconciliation and parity tests complete.
-
-## Gate checklist
-
+## Mandatory still-blocked gates
 | Gate | Status |
 | --- | --- |
-| Repo bootstrap / fail-closed service auth | Done |
-| Schema port | Done (DDL migration parity review pending) |
-| ReviewService + staging REST APIs | Implemented; CI validation required |
-| Staging local SQLite integration tests | Implemented; CI validation required |
-| Offline batch idempotency | Implemented; advanced concurrent replay tests pending |
-| Staging Turso schema audit / data reconciliation | Pending |
-| Grammar special-case migration | Pending |
-| Google OAuth / media / IELTS APIs | Pending |
-| FE live-data migration via BFF | Pending |
+| Core/Web tests and local integration | Complete |
+| Database marker gate + negative tests | Under CI validation |
+| Full schema/data audit tool | Under CI validation |
+| Pure FSRS calculation parity | Under CI validation |
+| Real production Turso checkpointed export | **NOT AVAILABLE** |
+| Independent Turso staging instance & verification | **NOT AVAILABLE** |
+| Preserve original production card IDs and review history | **NOT DONE** |
+| Grammar synthetic ID behavior mapping | **NOT DONE** |
+| FE live review + Dexie replay / OAuth / IELTS parity | **NOT DONE** |
+| Authenticated cloud staging and rollback rehearsal | **NOT DONE** |
 | Production cutover | **NOT AUTHORIZED** |
 
-## Migration safety
+## Operating constraints
+Never supply production Turso credentials to the new Core while migration
+checks are in progress. The staging marker is an accidental-target fence, not
+proof of non-production ownership; manually verify Turso organization and
+database identity. To audit data without ever opening a live connection, use
+local exports and `scripts/audit_snapshots.py` as documented in
+[DB_SNAPSHOT_PARITY.md](DB_SNAPSHOT_PARITY.md).
 
-1. Keep original Turso untouched.
-2. Never point this migration build at the production Turso instance.
-3. Copy + verify full data, validate DDL separately, compare review logs and card IDs.
-4. Create staging backend identity credential and lock down FE BFF access before any external deployment.
-5. Capture traces for duplicate replay and atomic rollback on staging.
-6. Do not decommission `japanese-srs-system` until written approval and rollback rehearsal.
+Legacy production must remain untouched. Do not re-enable Add Card.
