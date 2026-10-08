@@ -6,6 +6,7 @@ import type { Client } from '@libsql/client';
  */
 export async function createLocalFixtureSchema(client: Client): Promise<void> {
   await client.execute('PRAGMA foreign_keys = ON');
+  await client.execute(`CREATE TABLE kiokudo_deployment_identity (environment TEXT PRIMARY KEY, marker TEXT NOT NULL)`);
   await client.execute(`CREATE TABLE decks (
     id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT, created_at INTEGER NOT NULL
   )`);

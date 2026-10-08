@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { createDatabaseConnection } from './client.js';
 import { createLocalFixtureSchema } from './local-fixture-schema.js';
 import { cards, decks } from './schema.js';
+import { LOCAL_REHEARSAL_MARKER } from './staging-identity.js';
 
 export interface SeedManifest {
   kind: 'git-json-rehearsal-not-production';
@@ -56,6 +57,7 @@ export async function seedLocalStaging(output: string, fixtureDir: string): Prom
   const connection=createDatabaseConnection('file:'+file);
   try {
     await createLocalFixtureSchema(connection.client);
+    await connection.client.execute({sql:'INSERT INTO kiokudo_deployment_identity (environment,marker) VALUES (?,?)',args:['staging',LOCAL_REHEARSAL_MARKER]});
     await connection.db.transaction(async(tx)=>{
       for(const dataset of parsed) {
         await tx.insert(decks).values({
