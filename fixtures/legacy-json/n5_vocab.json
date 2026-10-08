@@ -1,0 +1,482 @@
+[
+  {
+    "word": "私",
+    "reading": "わたし",
+    "meaning": "Tôi, bản thân mình",
+    "sentence": "{{c1::私}}は学生です。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "先生",
+    "reading": "せんせい",
+    "meaning": "Thầy cô giáo, giáo viên",
+    "sentence": "日本語の{{c1::先生}}に質問します。",
+    "pitch": "[3] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "学生",
+    "reading": "がくせい",
+    "meaning": "Học sinh, sinh viên",
+    "sentence": "{{c1::学生}}たちは教室にいます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "友達",
+    "reading": "ともだち",
+    "meaning": "Bạn bè, người bạn",
+    "sentence": "週末に{{c1::友達}}と映画を見ます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "学校",
+    "reading": "がっこう",
+    "meaning": "Trường học",
+    "sentence": "毎朝８時に{{c1::学校}}へ行きます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "会社",
+    "reading": "かいしゃ",
+    "meaning": "Công ty",
+    "sentence": "父は日本の{{c1::会社}}で働いています。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "日本",
+    "reading": "にほん",
+    "meaning": "Nước Nhật Bản",
+    "sentence": "来年{{c1::日本}}へ旅行に行きたいです。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "日本語",
+    "reading": "にほんご",
+    "meaning": "Tiếng Nhật",
+    "sentence": "毎日{{c1::日本語}}を勉強しています。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "本",
+    "reading": "ほん",
+    "meaning": "Quyển sách",
+    "sentence": "図書館で面白い{{c1::本}}を借りました。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "車",
+    "reading": "くるま",
+    "meaning": "Xe hơi, xe ô tô",
+    "sentence": "新しい{{c1::車}}を買いました。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "水",
+    "reading": "みず",
+    "meaning": "Nước (uống)",
+    "sentence": "冷たい{{c1::水}}を一杯ください。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "お茶",
+    "reading": "おちゃ",
+    "meaning": "Trà, chè xanh",
+    "sentence": "食後に温かい{{c1::お茶}}を飲みます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "ご飯",
+    "reading": "ごはん",
+    "meaning": "Cơm, bữa ăn",
+    "sentence": "朝{{c1::ご飯}}をしっかり食べました。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "魚",
+    "reading": "さかな",
+    "meaning": "Con cá",
+    "sentence": "日本の新鮮な{{c1::魚}}が好きです。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "肉",
+    "reading": "にく",
+    "meaning": "Thịt",
+    "sentence": "今夜は牛肉と{{c1::肉}}料理を作ります。",
+    "pitch": "[2] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "野菜",
+    "reading": "やさい",
+    "meaning": "Rau củ",
+    "sentence": "健康のために{{c1::野菜}}をたくさん食べます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "今日",
+    "reading": "きょう",
+    "meaning": "Hôm nay",
+    "sentence": "{{c1::今日}}はとても天気がいいです。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "明日",
+    "reading": "あした",
+    "meaning": "Ngày mai",
+    "sentence": "{{c1::明日}}テストがあります。",
+    "pitch": "[3] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "昨日",
+    "reading": "きのう",
+    "meaning": "Hôm qua",
+    "sentence": "{{c1::昨日}}友達と買い物をしました。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "朝",
+    "reading": "あさ",
+    "meaning": "Buổi sáng",
+    "sentence": "毎朝６時に起きます。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "昼",
+    "reading": "ひる",
+    "meaning": "Buổi trưa",
+    "sentence": "{{c1::昼}}休みは１２時からです。",
+    "pitch": "[2] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "晩",
+    "reading": "ばん",
+    "meaning": "Buổi tối, đêm",
+    "sentence": "毎{{c1::晩}}日本語のラジオを聞きます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "時間",
+    "reading": "じかん",
+    "meaning": "Thời gian, tiếng đồng hồ",
+    "sentence": "勉強する{{c1::時間}}が足りません。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "時計",
+    "reading": "とけい",
+    "meaning": "Đồng hồ",
+    "sentence": "壁に古い{{c1::時計}}がかかっています。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "電話",
+    "reading": "でんわ",
+    "meaning": "Điện thoại",
+    "sentence": "先生に{{c1::電話}}をかけました。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "部屋",
+    "reading": "へや",
+    "meaning": "Căn phòng",
+    "sentence": "私の{{c1::部屋}}は日当たりが良いです。",
+    "pitch": "[2] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "家",
+    "reading": "いえ",
+    "meaning": "Ngôi nhà",
+    "sentence": "早く{{c1::家}}に帰りたいです。",
+    "pitch": "[2] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "机",
+    "reading": "つくえ",
+    "meaning": "Bàn học, bàn làm việc",
+    "sentence": "{{c1::机}}の上にノートを置きます。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "椅子",
+    "reading": "いす",
+    "meaning": "Cái ghế",
+    "sentence": "どうぞその{{c1::椅子}}にお座りください。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "桜",
+    "reading": "さくら",
+    "meaning": "Hoa anh đào",
+    "sentence": "春になると公園の{{c1::桜}}が満開になります。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "警察",
+    "reading": "けいさつ",
+    "meaning": "Cảnh sát, lực lượng an ninh",
+    "sentence": "道に迷って{{c1::警察}}署で尋ねました。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "食べる",
+    "reading": "たべる",
+    "meaning": "Ăn",
+    "sentence": "毎朝パンを{{c1::食べます}}。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "飲む",
+    "reading": "のむ",
+    "meaning": "Uống",
+    "sentence": "薬を水で{{c1::飲みました}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "行く",
+    "reading": "いく",
+    "meaning": "Đi",
+    "sentence": "バスで駅へ{{c1::行きます}}。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "来る",
+    "reading": "くる",
+    "meaning": "Đến, tới",
+    "sentence": "友達が家に遊びに{{c1::来ました}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "帰る",
+    "reading": "かえる",
+    "meaning": "Về, trở về nhà",
+    "sentence": "午後６時にうちへ{{c1::帰ります}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "見る",
+    "reading": "みる",
+    "meaning": "Nhìn, xem",
+    "sentence": "テレビのニュースを{{c1::見ます}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "聞く",
+    "reading": "きく",
+    "meaning": "Nghe, hỏi",
+    "sentence": "音楽を{{c1::聞きながら}}散歩します。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "読む",
+    "reading": "よむ",
+    "meaning": "Đọc",
+    "sentence": "日本語の新聞を{{c1::読みます}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "書く",
+    "reading": "かく",
+    "meaning": "Viết",
+    "sentence": "先生に手紙を{{c1::書きました}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "話す",
+    "reading": "はなす",
+    "meaning": "Nói chuyện",
+    "sentence": "先生と日本語で{{c1::話します}}。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "買う",
+    "reading": "かう",
+    "meaning": "Mua",
+    "sentence": "スーパーでリンゴを{{c1::買いました}}。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "会う",
+    "reading": "あう",
+    "meaning": "Gặp gỡ",
+    "sentence": "駅の前で友達に{{c1::会いました}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "待つ",
+    "reading": "まつ",
+    "meaning": "Chờ, đợi",
+    "sentence": "ロビーで少し{{c1::待ってください}}。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "大きい",
+    "reading": "おおきい",
+    "meaning": "To, lớn",
+    "sentence": "この公園には{{c1::大きい}}池があります。",
+    "pitch": "[3] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "小さい",
+    "reading": "ちいさい",
+    "meaning": "Nhỏ, bé",
+    "sentence": "{{c1::小さい}}鳥が庭にいます。",
+    "pitch": "[3] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "新しい",
+    "reading": "あたらしい",
+    "meaning": "Mới",
+    "sentence": "{{c1::新しい}}靴を履いて出かけました。",
+    "pitch": "[4] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "古い",
+    "reading": "ふるい",
+    "meaning": "Cũ, cổ kính",
+    "sentence": "京都には{{c1::古い}}お寺がたくさんあります。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "良い",
+    "reading": "いい / よい",
+    "meaning": "Tốt, đẹp",
+    "sentence": "今日はとても{{c1::いい}}天気ですね。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "高い",
+    "reading": "たかい",
+    "meaning": "Cao, đắt tiền",
+    "sentence": "富士山は日本で一番{{c1::高い}}山です。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "安い",
+    "reading": "やすい",
+    "meaning": "Rẻ (giá cả)",
+    "sentence": "この店の商品はとても{{c1::安いです}}。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "暑い",
+    "reading": "あつい",
+    "meaning": "Nóng (thời tiết)",
+    "sentence": "日本の夏はとても{{c1::暑い}}です。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "寒い",
+    "reading": "さむい",
+    "meaning": "Lạnh (thời tiết)",
+    "sentence": "冬の北海道はとても{{c1::寒い}}です。",
+    "pitch": "[2] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "難しい",
+    "reading": "むずかしい",
+    "meaning": "Khó, phức tạp",
+    "sentence": "漢字の書き方は{{c1::難しい}}です。",
+    "pitch": "[4] Nakadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "易しい",
+    "reading": "やさしい",
+    "meaning": "Dễ, đơn giản",
+    "sentence": "今日の試験は{{c1::易しかった}}です。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "好き",
+    "reading": "すき",
+    "meaning": "Thích",
+    "sentence": "私は日本のアニメが{{c1::好き}}です。",
+    "pitch": "[2] Odaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "嫌い",
+    "reading": "きらい",
+    "meaning": "Ghét, không thích",
+    "sentence": "子供のころピーマンが{{c1::嫌い}}でした。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  },
+  {
+    "word": "元気",
+    "reading": "げんき",
+    "meaning": "Khỏe mạnh, tràn đầy sức sống",
+    "sentence": "お久しぶりです、お{{c1::元気}}ですか。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "静か",
+    "reading": "しずか",
+    "meaning": "Yên tĩnh, thanh bình",
+    "sentence": "夜の図書館はとても{{c1::静か}}です。",
+    "pitch": "[1] Atamadaka",
+    "type": "Vocab"
+  },
+  {
+    "word": "暇",
+    "reading": "ひま",
+    "meaning": "Rảnh rỗi",
+    "sentence": "週末は特に予定がなく{{c1::暇}}です。",
+    "pitch": "[0] Heiban",
+    "type": "Vocab"
+  }
+]

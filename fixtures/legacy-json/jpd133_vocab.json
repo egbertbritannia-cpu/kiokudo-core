@@ -1,0 +1,2050 @@
+[
+  {
+    "raw_word": "両親",
+    "word": "両親",
+    "reading": "りょうしん",
+    "meaning": "Bố mẹ (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "父",
+    "word": "父",
+    "reading": "ちち",
+    "meaning": "Bố (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "母",
+    "word": "母",
+    "reading": "はは",
+    "meaning": "Mẹ (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "兄弟",
+    "word": "兄弟",
+    "reading": "きょうだい",
+    "meaning": "Anh chị",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "兄",
+    "word": "兄",
+    "reading": "あに",
+    "meaning": "Anh trai (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "姉",
+    "word": "姉",
+    "reading": "あね",
+    "meaning": "Chị gái (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "弟",
+    "word": "弟",
+    "reading": "おとうと",
+    "meaning": "Em trai (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "妹",
+    "word": "妹",
+    "reading": "いもうと",
+    "meaning": "Em gái (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "夫",
+    "word": "夫",
+    "reading": "おっと",
+    "meaning": "Chồng (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "妻",
+    "word": "妻",
+    "reading": "つま",
+    "meaning": "Vợ (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "子ども",
+    "word": "子ども",
+    "reading": "こども",
+    "meaning": "Con (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "息子",
+    "word": "息子",
+    "reading": "むすこ",
+    "meaning": "Con trai (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "むすめ",
+    "word": "むすめ",
+    "reading": "むすめ",
+    "meaning": "Con gái (của mình)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "お父さん",
+    "word": "お父さん",
+    "reading": "おとうさん",
+    "meaning": "Bố (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "お母さん",
+    "word": "お母さん",
+    "reading": "おかあさん",
+    "meaning": "Mẹ (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "お兄さん",
+    "word": "お兄さん",
+    "reading": "おにいさん",
+    "meaning": "Anh trai (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "お姉さん",
+    "word": "お姉さん",
+    "reading": "おねえさん",
+    "meaning": "Chị gái (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "弟さん",
+    "word": "弟さん",
+    "reading": "おとうとさん",
+    "meaning": "Em trai (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "妹さん",
+    "word": "妹さん",
+    "reading": "いもうとさん",
+    "meaning": "Em gái (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "お子さん",
+    "word": "お子さん",
+    "reading": "おこさん",
+    "meaning": "Con (của người khác)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "ペット",
+    "word": "ペット",
+    "reading": "ペット",
+    "meaning": "Thú nuôi",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "猫",
+    "word": "猫",
+    "reading": "ねこ",
+    "meaning": "Con mèo",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "ピアノ",
+    "word": "ピアノ",
+    "reading": "ピアノ",
+    "meaning": "Đàn piano",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "医者",
+    "word": "医者",
+    "reading": "いしゃ",
+    "meaning": "Bác sỹ",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "高校生",
+    "word": "高校生",
+    "reading": "こうこうせい",
+    "meaning": "Học sinh cấp ba",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "大学生",
+    "word": "大学生",
+    "reading": "だいがくせい",
+    "meaning": "Sinh viên đại học",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "～人",
+    "word": "～人",
+    "reading": "～にん",
+    "meaning": "～ người (đơn vị đếm người)",
+    "topic": "家族・友達",
+    "page": 1
+  },
+  {
+    "raw_word": "～匹",
+    "word": "～匹",
+    "reading": "～ひき",
+    "meaning": "～ con",
+    "topic": "第８課 ことば",
+    "page": 2
+  },
+  {
+    "raw_word": "住みます［住む］1 すみます",
+    "word": "住みます すみます",
+    "reading": "",
+    "meaning": "Sống, sinh sống",
+    "topic": "第８課 ことば",
+    "page": 2
+  },
+  {
+    "raw_word": "います［いる］2",
+    "word": "います",
+    "reading": "います",
+    "meaning": "Có (người, động vật)",
+    "topic": "第８課 ことば",
+    "page": 2
+  },
+  {
+    "raw_word": "ご主人",
+    "word": "ご主人",
+    "reading": "ごしゅじん",
+    "meaning": "Chồng (của người khác)",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "奥さん",
+    "word": "奥さん",
+    "reading": "おくさん",
+    "meaning": "Vợ (của người khác)",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "先輩",
+    "word": "先輩",
+    "reading": "せんぱい",
+    "meaning": "Tiền bối, người đi trước, đàn anh đàn chị",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "後輩",
+    "word": "後輩",
+    "reading": "こうはい",
+    "meaning": "Hậu bối, người vào sau, đàn em",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "うさぎ",
+    "word": "うさぎ",
+    "reading": "うさぎ",
+    "meaning": "Con thỏ",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "体",
+    "word": "体",
+    "reading": "からだ",
+    "meaning": "Thân thể, cơ thể, sức khỏe",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "足",
+    "word": "足",
+    "reading": "あし",
+    "meaning": "Chân",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "顔",
+    "word": "顔",
+    "reading": "かお",
+    "meaning": "Mặt, khuôn mặt",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "髪",
+    "word": "髪",
+    "reading": "かみ",
+    "meaning": "Tóc",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "口",
+    "word": "口",
+    "reading": "くち",
+    "meaning": "Miệng",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "鼻",
+    "word": "鼻",
+    "reading": "はな",
+    "meaning": "Mũi",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "目",
+    "word": "目",
+    "reading": "め",
+    "meaning": "Mắt",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "耳",
+    "word": "耳",
+    "reading": "みみ",
+    "meaning": "Tai",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "頭がいい",
+    "word": "頭がいい",
+    "reading": "あたまがいい",
+    "meaning": "Thông minh",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "かっこいい",
+    "word": "かっこいい",
+    "reading": "かっこいい",
+    "meaning": "Bảnh bao, đẹp trai",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "かわいい",
+    "word": "かわいい",
+    "reading": "かわいい",
+    "meaning": "Đáng yêu, dễ thương",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "背が高い",
+    "word": "背が高い",
+    "reading": "せがたかい",
+    "meaning": "Cao (dáng người)",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "長い",
+    "word": "長い",
+    "reading": "ながい",
+    "meaning": "Dài",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "短い",
+    "word": "短い",
+    "reading": "みじかい",
+    "meaning": "Ngắn",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "優しい",
+    "word": "優しい",
+    "reading": "やさしい",
+    "meaning": "Hiền lành",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "黒い",
+    "word": "黒い",
+    "reading": "くろい",
+    "meaning": "Đen, màu đen",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "白い",
+    "word": "白い",
+    "reading": "しろい",
+    "meaning": "Trắng, màu trắng",
+    "topic": "こんな人",
+    "page": 2
+  },
+  {
+    "raw_word": "茶色い",
+    "word": "茶色い",
+    "reading": "ちゃいろい",
+    "meaning": "Màu nâu",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "元気（な）",
+    "word": "元気（な）",
+    "reading": "げんき（な）",
+    "meaning": "Khỏe mạnh",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "親切（な）",
+    "word": "親切（な）",
+    "reading": "しんせつ（な）",
+    "meaning": "Tốt bụng",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "まじめ（な）",
+    "word": "まじめ（な）",
+    "reading": "まじめ（な）",
+    "meaning": "Chăm chỉ, cần mẫn",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "上手（な）",
+    "word": "上手（な）",
+    "reading": "じょうず（な）",
+    "meaning": "Giỏi",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "下手（な）",
+    "word": "下手（な）",
+    "reading": "へた（な）",
+    "meaning": "Kém",
+    "topic": "こんな人",
+    "page": 3
+  },
+  {
+    "raw_word": "カード",
+    "word": "カード",
+    "reading": "カード",
+    "meaning": "Thẻ / Thiệp",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "傘",
+    "word": "傘",
+    "reading": "かさ",
+    "meaning": "Ô, cái ô",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "（お）金",
+    "word": "（お）金",
+    "reading": "（お）かね",
+    "meaning": "Tiền",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "靴下",
+    "word": "靴下",
+    "reading": "くつした",
+    "meaning": "Đôi tất",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "辞書",
+    "word": "辞書",
+    "reading": "じしょ",
+    "meaning": "Từ điển",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "チョコレート",
+    "word": "チョコレート",
+    "reading": "チョコレート",
+    "meaning": "Sô cô la",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "手紙",
+    "word": "手紙",
+    "reading": "てがみ",
+    "meaning": "Thư",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "ネックレス",
+    "word": "ネックレス",
+    "reading": "ネックレス",
+    "meaning": "Vòng cổ",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "ノート",
+    "word": "ノート",
+    "reading": "ノート",
+    "meaning": "Vở, quyển vở",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "プレゼント",
+    "word": "プレゼント",
+    "reading": "プレゼント",
+    "meaning": "Quà, món quà",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "メール",
+    "word": "メール",
+    "reading": "メール",
+    "meaning": "Thư, thư điện tử",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "祖母",
+    "word": "祖母",
+    "reading": "そぼ",
+    "meaning": "Bà (của mình)",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "クリスマス",
+    "word": "クリスマス",
+    "reading": "クリスマス",
+    "meaning": "Giáng sinh",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "結婚式",
+    "word": "結婚式",
+    "reading": "けっこんしき",
+    "meaning": "Lễ kết hôn",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "バレンタインデー",
+    "word": "バレンタインデー",
+    "reading": "バレンタインデー",
+    "meaning": "Ngày lễ tình nhân",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "何か",
+    "word": "何か",
+    "reading": "なにか",
+    "meaning": "Cái gì đó",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "送ります［送る］1 おくります",
+    "word": "送ります おくります",
+    "reading": "",
+    "meaning": "Gửi / Tiễn",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "もらいます［もらう］1",
+    "word": "もらいます",
+    "reading": "もらいます",
+    "meaning": "Nhận",
+    "topic": "プレゼント",
+    "page": 3
+  },
+  {
+    "raw_word": "あげます［あげる］2",
+    "word": "あげます",
+    "reading": "あげます",
+    "meaning": "Tặng, biếu",
+    "topic": "プレゼント",
+    "page": 4
+  },
+  {
+    "raw_word": "くれます［くれる］2",
+    "word": "くれます",
+    "reading": "くれます",
+    "meaning": "Cho (mình)",
+    "topic": "プレゼント",
+    "page": 4
+  },
+  {
+    "raw_word": "電話します［電話する］3 でんわします",
+    "word": "電話します でんわします",
+    "reading": "",
+    "meaning": "Gọi điện thoại",
+    "topic": "プレゼント",
+    "page": 4
+  },
+  {
+    "raw_word": "もうすぐ",
+    "word": "もうすぐ",
+    "reading": "もうすぐ",
+    "meaning": "Sắp, sắp sửa",
+    "topic": "プレゼント",
+    "page": 4
+  },
+  {
+    "raw_word": "よかったですね",
+    "word": "よかったですね",
+    "reading": "よかったですね",
+    "meaning": "Tốt quá nhỉ!",
+    "topic": "プレゼント",
+    "page": 4
+  },
+  {
+    "raw_word": "アクション",
+    "word": "アクション",
+    "reading": "アクション",
+    "meaning": "Hành động",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "（お）菓子",
+    "word": "（お）菓子",
+    "reading": "（お）かし",
+    "meaning": "Bánh kẹo",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "切手",
+    "word": "切手",
+    "reading": "きって",
+    "meaning": "Tem",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "クラシック",
+    "word": "クラシック",
+    "reading": "クラシック",
+    "meaning": "Nhạc cổ điển",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "ポップス",
+    "word": "ポップス",
+    "reading": "ポップス",
+    "meaning": "Nhạc Pop",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "小説",
+    "word": "小説",
+    "reading": "しょうせつ",
+    "meaning": "Tiểu thuyết",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "漫画",
+    "word": "漫画",
+    "reading": "まんが",
+    "meaning": "Truyện tranh",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "釣り",
+    "word": "釣り",
+    "reading": "つり",
+    "meaning": "Câu cá",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "ドラマ",
+    "word": "ドラマ",
+    "reading": "ドラマ",
+    "meaning": "Phim truyền hình",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "プール",
+    "word": "プール",
+    "reading": "プール",
+    "meaning": "Bể bơi",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "最近",
+    "word": "最近",
+    "reading": "さいきん",
+    "meaning": "Gần đây",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～日",
+    "word": "～日",
+    "reading": "～にち",
+    "meaning": "～ ngày",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～週間",
+    "word": "～週間",
+    "reading": "～しゅうかん",
+    "meaning": "～ tuần",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～か月",
+    "word": "～か月",
+    "reading": "～かげつ",
+    "meaning": "～ tháng",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～年",
+    "word": "～年",
+    "reading": "～ねん",
+    "meaning": "～ năm",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～回",
+    "word": "～回",
+    "reading": "～かい",
+    "meaning": "～ lần",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～冊",
+    "word": "～冊",
+    "reading": "～さつ",
+    "meaning": "～ quyển",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～杯",
+    "word": "～杯",
+    "reading": "～はい",
+    "meaning": "～ ly, cốc (đơn vị đếm ly, bát…)",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "～本",
+    "word": "～本",
+    "reading": "～ほん",
+    "meaning": "～ cái, chiếc, cây (đơn vị đếm vật có chiều dài)",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "泳ぎます［泳ぐ］1",
+    "word": "泳ぎます",
+    "reading": "およぎます",
+    "meaning": "Bơi",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "描きます［描く］1",
+    "word": "描きます",
+    "reading": "かきます",
+    "meaning": "Vẽ, tả",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "集めます［集める］2",
+    "word": "集めます",
+    "reading": "あつめます",
+    "meaning": "Thu thập, tập hợp",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "運転します［運転する］3 うんてんします",
+    "word": "運転します うんてんします",
+    "reading": "",
+    "meaning": "Lái (xe)",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "特に",
+    "word": "特に",
+    "reading": "とくに",
+    "meaning": "Đặc biệt",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "いつも",
+    "word": "いつも",
+    "reading": "いつも",
+    "meaning": "Luôn, thường xuyên, luôn luôn",
+    "topic": "いろいろな趣味",
+    "page": 5
+  },
+  {
+    "raw_word": "よく",
+    "word": "よく",
+    "reading": "よく",
+    "meaning": "Thường, hay, rất",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "ときどき",
+    "word": "ときどき",
+    "reading": "ときどき",
+    "meaning": "Thỉnh thoảng, đôi khi",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "あまり",
+    "word": "あまり",
+    "reading": "あまり",
+    "meaning": "Không ～ lắm",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "全然",
+    "word": "全然",
+    "reading": "ぜんぜん",
+    "meaning": "Hoàn toàn không ～",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "でも",
+    "word": "でも",
+    "reading": "でも",
+    "meaning": "Nhưng, tuy nhiên",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "だけ",
+    "word": "だけ",
+    "reading": "だけ",
+    "meaning": "Chỉ",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "イベント",
+    "word": "イベント",
+    "reading": "イベント",
+    "meaning": "Sự kiện",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "コンテスト",
+    "word": "コンテスト",
+    "reading": "コンテスト",
+    "meaning": "Cuộc thi",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "食堂",
+    "word": "食堂",
+    "reading": "しょくどう",
+    "meaning": "Nhà ăn",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "ダイビング",
+    "word": "ダイビング",
+    "reading": "ダイビング",
+    "meaning": "Sự lặn xuống, lao xuống",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "ダンス",
+    "word": "ダンス",
+    "reading": "ダンス",
+    "meaning": "Khiêu vũ",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "～クラブ（例：ダンスクラブ）",
+    "word": "～クラブ（例：ダンスクラブ）",
+    "reading": "",
+    "meaning": "Câu lạc bộ ～ (Vd: câu lạc bộ khiêu vũ)",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "）きょうしつ",
+    "word": "）きょうしつ",
+    "reading": "）きょうしつ",
+    "meaning": "Lớp học ～ (Vd: lớp học thư pháp)",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "習います［習う］1",
+    "word": "習います",
+    "reading": "ならいます",
+    "meaning": "Học",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "乗ります［乗る］1",
+    "word": "乗ります",
+    "reading": "のります",
+    "meaning": "Lên",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "入ります［入る］1",
+    "word": "入ります",
+    "reading": "はいります",
+    "meaning": "Vào, đi vào; Gia nhập, tham gia",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "申し込みます［申し込む］1 もうしこみます",
+    "word": "申し込みます もうしこみます",
+    "reading": "",
+    "meaning": "Xin, thỉnh cầu,đăng ký",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "できます［できる］2",
+    "word": "できます",
+    "reading": "できます",
+    "meaning": "Có thể",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "参加します［参加する］3 さんかします",
+    "word": "参加します さんかします",
+    "reading": "",
+    "meaning": "Tham gia",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "すごい",
+    "word": "すごい",
+    "reading": "すごい",
+    "meaning": "Kinh khủng / Tuyệt vời",
+    "topic": "第９課 ことば",
+    "page": 6
+  },
+  {
+    "raw_word": "いろいろな",
+    "word": "いろいろな",
+    "reading": "いろいろな",
+    "meaning": "Nhiều, đa dạng",
+    "topic": "第９課 ことば",
+    "page": 7
+  },
+  {
+    "raw_word": "上手に",
+    "word": "上手に",
+    "reading": "じょうずに",
+    "meaning": "Thành thạo",
+    "topic": "第９課 ことば",
+    "page": 7
+  },
+  {
+    "raw_word": "受付",
+    "word": "受付",
+    "reading": "うけつけ",
+    "meaning": "Quầy lễ tân, thường trực",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "カード",
+    "word": "カード",
+    "reading": "カード",
+    "meaning": "Thẻ",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "住所",
+    "word": "住所",
+    "reading": "じゅうしょ",
+    "meaning": "Địa chỉ",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "宿題",
+    "word": "宿題",
+    "reading": "しゅくだい",
+    "meaning": "Bài tập về nhà",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "電話番号",
+    "word": "電話番号",
+    "reading": "でんわばんごう",
+    "meaning": "Số điện thoại",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "～番",
+    "word": "～番",
+    "reading": "～ばん",
+    "meaning": "Số~",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "言います［言う］1 いいます",
+    "word": "言います いいます",
+    "reading": "",
+    "meaning": "Nói",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "払います［払う］1 はらいます",
+    "word": "払います はらいます",
+    "reading": "",
+    "meaning": "Trả, chi trả",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "降ります［降りる］2 おります",
+    "word": "降ります おります",
+    "reading": "",
+    "meaning": "Xuống (tàu, xe)",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "見せます［見せる］2 みせます",
+    "word": "見せます みせます",
+    "reading": "",
+    "meaning": "Cho xem",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "予約します［予約する］3 よやくします",
+    "word": "予約します よやくします",
+    "reading": "",
+    "meaning": "Đặt trước",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "どうやって",
+    "word": "どうやって",
+    "reading": "どうやって",
+    "meaning": "Làm thế nào",
+    "topic": "楽しい週末",
+    "page": 7
+  },
+  {
+    "raw_word": "音",
+    "word": "音",
+    "reading": "おと",
+    "meaning": "Âm thanh, tiếng động",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "声",
+    "word": "声",
+    "reading": "こえ",
+    "meaning": "Giọng nói",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "薬",
+    "word": "薬",
+    "reading": "くすり",
+    "meaning": "Thuốc (uống, bôi…)",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "右",
+    "word": "右",
+    "reading": "みぎ",
+    "meaning": "Bên phải",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "左",
+    "word": "左",
+    "reading": "ひだり",
+    "meaning": "Bên trái",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "角",
+    "word": "角",
+    "reading": "かど",
+    "meaning": "Góc đường",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "交差点",
+    "word": "交差点",
+    "reading": "こうさてん",
+    "meaning": "Ngã tư",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "信号",
+    "word": "信号",
+    "reading": "しんごう",
+    "meaning": "Tín hiệu / Đèn giao thông",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "橋",
+    "word": "橋",
+    "reading": "はし",
+    "meaning": "Cầu",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "道",
+    "word": "道",
+    "reading": "みち",
+    "meaning": "Đường",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "～つ目",
+    "word": "～つ目",
+    "reading": "～つめ",
+    "meaning": "Thứ ~ (đếm thứ tự)",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "探します［探す］1",
+    "word": "探します",
+    "reading": "さがします",
+    "meaning": "Tìm kiếm/Tìm",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "飲みます［飲む］1",
+    "word": "飲みます",
+    "reading": "のみます",
+    "meaning": "Uống",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "みます",
+    "word": "みます",
+    "reading": "みます",
+    "meaning": "Uống thuốc",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "曲がります［曲がる］1 まがります",
+    "word": "曲がります まがります",
+    "reading": "",
+    "meaning": "Rẽ/ Quẹo",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "渡ります［渡る］1",
+    "word": "渡ります",
+    "reading": "わたります",
+    "meaning": "Qua, băng qua",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "聞こえます［聞こえる］2 きこえます",
+    "word": "聞こえます きこえます",
+    "reading": "",
+    "meaning": "Nghe thấy / Nghe được",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "見えます［見える］2 みえます",
+    "word": "見えます みえます",
+    "reading": "",
+    "meaning": "Nhìn thấy / Nhìn được",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "まっすぐ",
+    "word": "まっすぐ",
+    "reading": "まっすぐ",
+    "meaning": "Thẳng",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "よく",
+    "word": "よく",
+    "reading": "よく",
+    "meaning": "Rõ",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "ちょっと",
+    "word": "ちょっと",
+    "reading": "ちょっと",
+    "meaning": "Một chút",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "ええと",
+    "word": "ええと",
+    "reading": "ええと",
+    "meaning": "À, ờ",
+    "topic": "私の集合",
+    "page": 8
+  },
+  {
+    "raw_word": "カーテン",
+    "word": "カーテン",
+    "reading": "カーテン",
+    "meaning": "Rèm",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "ごみ",
+    "word": "ごみ",
+    "reading": "ごみ",
+    "meaning": "Rác",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "手",
+    "word": "手",
+    "reading": "て",
+    "meaning": "Tay",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "荷物",
+    "word": "荷物",
+    "reading": "にもつ",
+    "meaning": "Hành lý / Bưu phẩm",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "パンフレット",
+    "word": "パンフレット",
+    "reading": "パンフレット",
+    "meaning": "Tờ rơi / Tờ quảng cáo",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "他",
+    "word": "他",
+    "reading": "ほか",
+    "meaning": "Khác",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "皆さん",
+    "word": "皆さん",
+    "reading": "みなさん",
+    "meaning": "Mọi người",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "（お）土産",
+    "word": "（お）土産",
+    "reading": "おみやげ",
+    "meaning": "Quà (lưu niệm)",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "押します［押す］1",
+    "word": "押します",
+    "reading": "おします",
+    "meaning": "Ấn/ Đẩy",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "座ります［座る］1",
+    "word": "座ります",
+    "reading": "すわります",
+    "meaning": "Ngồi",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "立ちます［立つ］1",
+    "word": "立ちます",
+    "reading": "たちます",
+    "meaning": "Đứng",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "入ります［入る］1",
+    "word": "入ります",
+    "reading": "はいります",
+    "meaning": "Vào",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "ります",
+    "word": "ります",
+    "reading": "ります",
+    "meaning": "Vào phòng học",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "遅れます［遅れる］2 おくれます",
+    "word": "遅れます おくれます",
+    "reading": "",
+    "meaning": "Muộn, chậm trễ",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "捨てます［捨てる］ すてます",
+    "word": "捨てます すてます",
+    "reading": "",
+    "meaning": "Vứt, vứt bỏ",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "集合します［集合する］ しゅうごうします",
+    "word": "集合します しゅうごうします",
+    "reading": "",
+    "meaning": "Tập trung / Tập hợp",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "危ない",
+    "word": "危ない",
+    "reading": "あぶない",
+    "meaning": "Nguy hiểm",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "大切（な）",
+    "word": "大切（な）",
+    "reading": "たいせつ（な）",
+    "meaning": "Quan trọng / Quý giá",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "迷惑（な）",
+    "word": "迷惑（な）",
+    "reading": "めいわくな（な）",
+    "meaning": "Phiền phức",
+    "topic": "いろいろな注意",
+    "page": 9
+  },
+  {
+    "raw_word": "動物園",
+    "word": "動物園",
+    "reading": "どうぶつえん",
+    "meaning": "Vườn bách thú",
+    "topic": "動物園で",
+    "page": 9
+  },
+  {
+    "raw_word": "クマ",
+    "word": "クマ",
+    "reading": "クマ",
+    "meaning": "Gấu",
+    "topic": "動物園で",
+    "page": 9
+  },
+  {
+    "raw_word": "コアラ",
+    "word": "コアラ",
+    "reading": "コアラ",
+    "meaning": "Gấu Kao-la",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "サル",
+    "word": "サル",
+    "reading": "サル",
+    "meaning": "Khỉ",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "ゾウ",
+    "word": "ゾウ",
+    "reading": "ゾウ",
+    "meaning": "Voi",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "鳥",
+    "word": "鳥",
+    "reading": "とり",
+    "meaning": "Chim",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "パンダ",
+    "word": "パンダ",
+    "reading": "パンダ",
+    "meaning": "Gấu trúc",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "ペンギン",
+    "word": "ペンギン",
+    "reading": "ペンギン",
+    "meaning": "Chim cánh cụt",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "入り口",
+    "word": "入り口",
+    "reading": "いりぐち",
+    "meaning": "Cửa vào/ Lối vào",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "出口",
+    "word": "出口",
+    "reading": "でぐち",
+    "meaning": "Cửa ra/ Lối ra",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "えさ",
+    "word": "えさ",
+    "reading": "えさ",
+    "meaning": "Mồi / Thức ăn cho động vật",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "おなか",
+    "word": "おなか",
+    "reading": "おなか",
+    "meaning": "Bụng",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "観覧車",
+    "word": "観覧車",
+    "reading": "かんらんしゃ",
+    "meaning": "Xe tham quan",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "バナナ",
+    "word": "バナナ",
+    "reading": "バナナ",
+    "meaning": "Chuối",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "ボール",
+    "word": "ボール",
+    "reading": "ボール",
+    "meaning": "Bóng",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "～たち",
+    "word": "～たち",
+    "reading": "～たち",
+    "meaning": "Các ～ / Bọn ～ (số nhiều)",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "歩きます［歩く］1",
+    "word": "歩きます",
+    "reading": "あるきます",
+    "meaning": "Đi bộ",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "飛びます［飛ぶ］1",
+    "word": "飛びます",
+    "reading": "とびます",
+    "meaning": "Bay",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "なります「なる」1",
+    "word": "なりますなる1",
+    "reading": "なりますなる1",
+    "meaning": "Trở nên/ Trở thành",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "休みます［休む］1",
+    "word": "休みます",
+    "reading": "やすみます",
+    "meaning": "Nghỉ",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "あそこのベンチで休みましょう",
+    "word": "あそこのベンチで休みましょう",
+    "reading": "",
+    "meaning": "Cùng nghỉ ở ghế băng kia nào!",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "やります［やる］1",
+    "word": "やります",
+    "reading": "やります",
+    "meaning": "Cho",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "おなかがすきます［すく］1",
+    "word": "おなかがすきます",
+    "reading": "おなかがすきます",
+    "meaning": "Đói",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "のどがかわきます［かわく］1",
+    "word": "のどがかわきます",
+    "reading": "のどがかわきます",
+    "meaning": "Khát",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "疲れます「疲れる」2 つかれます",
+    "word": "疲れます疲れる2 つかれます",
+    "reading": "",
+    "meaning": "Mệt",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "痛い",
+    "word": "痛い",
+    "reading": "いたい",
+    "meaning": "Đau",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "暗い",
+    "word": "暗い",
+    "reading": "くらい",
+    "meaning": "Tối",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "そろそろ",
+    "word": "そろそろ",
+    "reading": "そろそろ",
+    "meaning": "Đến lúc phải~",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "本当だ",
+    "word": "本当だ",
+    "reading": "ほんとうだ",
+    "meaning": "Thật",
+    "topic": "動物園で",
+    "page": 10
+  },
+  {
+    "raw_word": "頭",
+    "word": "頭",
+    "reading": "あたま",
+    "meaning": "Đầu",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "会話",
+    "word": "会話",
+    "reading": "かいわ",
+    "meaning": "Hội thoại",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "作文",
+    "word": "作文",
+    "reading": "さくぶん",
+    "meaning": "Tập làm văn, viết văn",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "クラスメイト",
+    "word": "クラスメイト",
+    "reading": "クラスメイト",
+    "meaning": "Bạn cùng lớp",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "雑誌",
+    "word": "雑誌",
+    "reading": "ざっし",
+    "meaning": "Tạp chí",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "ジョギング",
+    "word": "ジョギング",
+    "reading": "ジョギング",
+    "meaning": "Chạy bộ (tập thể dục)",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "生活",
+    "word": "生活",
+    "reading": "せいかつ",
+    "meaning": "Cuộc sống, sinh hoạt",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "店長",
+    "word": "店長",
+    "reading": "てんちょう",
+    "meaning": "Chủ cửa hàng",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "日記",
+    "word": "日記",
+    "reading": "にっき",
+    "meaning": "Nhật kí",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "初め",
+    "word": "初め",
+    "reading": "はじめ",
+    "meaning": "Đầu, ban đầu",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "一人暮らし",
+    "word": "一人暮らし",
+    "reading": "ひとりくらし",
+    "meaning": "Sống một mình",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "ひらがな",
+    "word": "ひらがな",
+    "reading": "ひらがな",
+    "meaning": "Chữ Hiragana",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "平日",
+    "word": "平日",
+    "reading": "へいじつ",
+    "meaning": "Ngày thường",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "毎週",
+    "word": "毎週",
+    "reading": "まいしゅう",
+    "meaning": "Hàng tuần",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "終わります［終わる］1 おわります",
+    "word": "終わります おわります",
+    "reading": "",
+    "meaning": "Kết thúc",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "通います［通う］1",
+    "word": "通います",
+    "reading": "かよいます",
+    "meaning": "Đi (học, làm)",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "ひきます［ひく］1",
+    "word": "ひきます",
+    "reading": "ひきます",
+    "meaning": "Chơi (dụng cụ âm nhạc)",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "休みます［休む］1",
+    "word": "休みます",
+    "reading": "やすみます",
+    "meaning": "Nghỉ",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "慣れます［慣れる］2",
+    "word": "慣れます",
+    "reading": "なれます",
+    "meaning": "Quen",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "忘れます［忘れる］2",
+    "word": "忘れます",
+    "reading": "わすれます",
+    "meaning": "Quên",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "散歩します［散歩する］3 さんぽします",
+    "word": "散歩します さんぽします",
+    "reading": "",
+    "meaning": "Đi dạo",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "厳しい",
+    "word": "厳しい",
+    "reading": "きびしい",
+    "meaning": "Ngiêm khắc",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "眠い",
+    "word": "眠い",
+    "reading": "ねむい",
+    "meaning": "Buồn ngủ",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "たいてい",
+    "word": "たいてい",
+    "reading": "たいてい",
+    "meaning": "Đại để/ Đại khái",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "なかなか",
+    "word": "なかなか",
+    "reading": "なかなか",
+    "meaning": "Mãi mà",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "ええ",
+    "word": "ええ",
+    "reading": "ええ",
+    "meaning": "Ừ/ Vâng",
+    "topic": "今の生活",
+    "page": 11
+  },
+  {
+    "raw_word": "オリンピック",
+    "word": "オリンピック",
+    "reading": "オリンピック",
+    "meaning": "Đại hội thể thao Olympic",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "外国",
+    "word": "外国",
+    "reading": "がいこく",
+    "meaning": "Nước ngoài",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "小学生",
+    "word": "小学生",
+    "reading": "しょうがくせい",
+    "meaning": "Học sinh tiểu học, cấp 1",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "中学生",
+    "word": "中学生",
+    "reading": "ちゅうがくせい",
+    "meaning": "Học sinh trung học, cấp 2",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "選手",
+    "word": "選手",
+    "reading": "せんしゅ",
+    "meaning": "Tuyển thủ / Cầu thủ",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "祖父",
+    "word": "祖父",
+    "reading": "そふ",
+    "meaning": "Ông",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "始めます［始める］2",
+    "word": "始めます",
+    "reading": "はじめます",
+    "meaning": "Bắt đầu",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "別れます［別れる］2",
+    "word": "別れます",
+    "reading": "わかれます",
+    "meaning": "Chia tay",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "だんだん",
+    "word": "だんだん",
+    "reading": "だんだん",
+    "meaning": "Dần dần",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "初めて",
+    "word": "初めて",
+    "reading": "はじめて",
+    "meaning": "Lần đầu tiên",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "それで",
+    "word": "それで",
+    "reading": "それで",
+    "meaning": "Vì thế / Vì vậy",
+    "topic": "今の 私・前の私",
+    "page": 12
+  },
+  {
+    "raw_word": "エアコン",
+    "word": "エアコン",
+    "reading": "エアコン",
+    "meaning": "Điều hòa",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "ニュース",
+    "word": "ニュース",
+    "reading": "ニュース",
+    "meaning": "Tin tức",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "消します［消す］1",
+    "word": "消します",
+    "reading": "けします",
+    "meaning": "Tắt",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "つけます［つける］2",
+    "word": "つけます",
+    "reading": "つけます",
+    "meaning": "Bật",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "うん",
+    "word": "うん",
+    "reading": "うん",
+    "meaning": "Vâng (thân mật)",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "ううん",
+    "word": "ううん",
+    "reading": "ううん",
+    "meaning": "Không (thân mật)",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "ごめん",
+    "word": "ごめん",
+    "reading": "ごめん",
+    "meaning": "Xin lỗi",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "そっか",
+    "word": "そっか",
+    "reading": "そっか",
+    "meaning": "Thế à!",
+    "topic": "友達と",
+    "page": 12
+  },
+  {
+    "raw_word": "また",
+    "word": "また",
+    "reading": "また",
+    "meaning": "Lại",
+    "topic": "友達と",
+    "page": 12
+  }
+]
