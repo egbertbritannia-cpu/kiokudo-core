@@ -2,7 +2,7 @@
 
 **Independent Kiokudo backend** — Fastify, TypeScript, libSQL/Turso, Drizzle, canonical ts-fsrs ReviewService.
 
-> Phase 2 is a **staging-only migration**. This repository is NOT authorized to replace the currently deployed `japanese-srs-system` backend.
+> Phase 3 safety-hardening on **staging-only infrastructure**. This repository is NOT authorized to replace the currently deployed `japanese-srs-system` backend.
 
 ## Quick start (API without DB)
 
@@ -19,7 +19,11 @@ Without a staging DB, business routes deliberately return HTTP 503.
 
 ## Staging database
 
-Set `KIOKUDO_DATABASE_SCOPE=staging` and `KIOKUDO_DATABASE_URL` (local `file:...` or separate Turso staging URL); set `KIOKUDO_DATABASE_AUTH_TOKEN` for remote URLs. There are **no automatic migrations**. Create/verify the staging schema manually before enabling real-data tests. Do NOT connect to existing production Turso.
+Set `KIOKUDO_DATABASE_SCOPE=staging`, `KIOKUDO_DATABASE_URL` and `KIOKUDO_EXPECTED_STAGING_MARKER`.
+The marker **must already exist inside the staging database** in `kiokudo_deployment_identity`, and must match the environment variable before Fastify starts serving routes.
+For remote Turso staging use a unique, separately verified marker and `KIOKUDO_DATABASE_AUTH_TOKEN`. Never reuse the public local-fixture marker for Turso.
+There are **no automatic remote migrations**. Independently verify the destination's Turso organization/database identity before adding its marker; never point this app at production.
+For local JSON rehearsal use `npm run staging:local -- seed ./staging-rehearsal.db` and the documented fixture marker `kiokudo-local-json-fixture-not-production-v1`.
 
 ## Implemented staging REST API
 
@@ -43,11 +47,12 @@ Client-provided `scheduledDays` is ignored. No user-facing Add Card.
 ```bash
 npm run check
 npm test
+python3 -m unittest discover -s tests_py -p 'test_*.py' -v
 npm run build
 ```
 
 ## Migration safety
 
-See [Migration Gates](docs/MIGRATION.md), [schema review](migrations/README.md), and [OpenAPI contract](contracts/openapi.yaml).
+See [Migration Gates](docs/MIGRATION.md), [DB staging identity and read-only snapshot audit](docs/DB_SNAPSHOT_PARITY.md), [FSRS reference parity scope](docs/FSRS_PARITY_SCOPE.md), [schema review](migrations/README.md), and [OpenAPI contract](contracts/openapi.yaml).
 
 **Not yet migrated:** IELTS, Grammar/JPD133 special-case creation parity, Google OAuth, media, staging Turso data reconciliation, FE real-data integration and production cutover.
