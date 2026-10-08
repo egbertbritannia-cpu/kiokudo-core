@@ -44,6 +44,7 @@ interface NormalizedReviewInput {
   rating: ReviewRating;
   ratingEnum: Rating;
   reviewedAt: Date;
+  explicitReviewedAt: boolean;
   responseTimeMs?: number;
 }
 interface ReviewTransition {
@@ -110,6 +111,7 @@ function normalizeInput(input: SubmitReviewInput, requireEventId = false): Norma
   const { rating, ratingEnum } = parseReviewRating(input.rating);
   return {
     eventId, cardId: input.cardId, rating, ratingEnum, reviewedAt,
+    explicitReviewedAt: input.reviewedAt !== undefined,
     responseTimeMs: input.responseTimeMs,
   };
 }
@@ -190,7 +192,7 @@ async function applyWithinTransaction(tx: any, input: NormalizedReviewInput): Pr
   const previous = await tx.select().from(reviewLogs).where(eq(reviewLogs.id, input.eventId)).limit(1);
   if (previous.length) {
     const log = previous[0] as typeof reviewLogs.$inferSelect;
-    if (log.cardId !== input.cardId || log.rating !== input.rating || toDate(log.reviewTime).getTime() !== input.reviewedAt.getTime()) {
+    if (log.cardId !== input.cardId || log.rating !== input.rating || (input.explicitReviewedAt && toDate(log.reviewTime).getTime() !== input.reviewedAt.getTime())) {
       throw new ReviewServiceError('EVENT_ID_CONFLICT', 'eventId already belongs to a different review.', 409);
     }
     return duplicateToResult(log);
