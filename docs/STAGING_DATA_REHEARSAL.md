@@ -20,7 +20,7 @@ npm run staging:local -- seed ./staging-rehearsal.db
 npm run staging:local -- audit ./staging-rehearsal.db
 ```
 
-Expected: 2 decks, 316 cards, 0 review logs, all cards New, no orphans.
+Expected: 2 decks, 316 cards, 0 review logs, all cards New, no orphans.\nJPD133 contains **22 source entries with an empty reading**. They are preserved\nas SQL NULL and counted in the audit, not guessed or silently normalized.
 The tool refuses remote URLs, cannot overwrite existing local DBs and saves a
 `.manifest.json` with source hashes and expected counts.
 
