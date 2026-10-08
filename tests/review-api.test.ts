@@ -45,13 +45,13 @@ test('review: writes FSRS state/log atomically, preserves legacy-shaped response
     assert.notEqual(first.json().data.scheduledDays,9999);
     const log=await cx.client.execute('SELECT * FROM review_logs');
     assert.equal(log.rows.length,1);
-    const card=await cx.client.execute('SELECT state,reps,stability,scheduled_days FROM cards WHERE id = "card-a"');
+    const card=await cx.client.execute('SELECT state,reps,stability,scheduled_days FROM cards WHERE id = 'card-a'');
     assert.ok(Number(card.rows[0].reps)>0);
     assert.equal(Number(card.rows[0].scheduled_days),first.json().data.scheduledDays);
     const second=await app.inject({method:'POST',url:'/api/v1/reviews',headers:auth,payload});
     assert.equal(second.statusCode,200,second.body);
     assert.equal(second.json().status,'duplicate');
-    const unchanged=await cx.client.execute('SELECT reps FROM cards WHERE id = "card-a"');
+    const unchanged=await cx.client.execute('SELECT reps FROM cards WHERE id = 'card-a'');
     assert.equal(unchanged.rows[0].reps,card.rows[0].reps);
     const conflict=await app.inject({method:'POST',url:'/api/v1/reviews',headers:auth,payload:{...payload,rating:'Hard'}});
     assert.equal(conflict.statusCode,409,conflict.body);
@@ -79,7 +79,7 @@ test('batch: sorted replay, duplicate retry and rejected invalid events',async()
     assert.deepEqual(replay.json().results.map((x:any)=>x.status),['duplicate','duplicate']);
     const log=await cx.client.execute('SELECT COUNT(*) n FROM review_logs');
     assert.equal(Number(log.rows[0].n),2);
-    const card=await cx.client.execute('SELECT reps FROM cards WHERE id = "card-a"');
+    const card=await cx.client.execute('SELECT reps FROM cards WHERE id = 'card-a'');
     assert.equal(Number(card.rows[0].reps),2);
   } finally {await app.close();await cx.close();}
 });
@@ -93,7 +93,7 @@ test('unexpected log insert failure rolls back card update (no non-transaction f
       eventId:'fail-evt',cardId:'card-a',rating:'Good',reviewedAt:at,
     }});
     assert.equal(response.statusCode,500,response.body);
-    const row=await cx.client.execute('SELECT reps,state FROM cards WHERE id = "card-a"');
+    const row=await cx.client.execute('SELECT reps,state FROM cards WHERE id = 'card-a'');
     assert.equal(Number(row.rows[0].reps),0);
     assert.equal(row.rows[0].state,'New');
     const log=await cx.client.execute('SELECT COUNT(*) n FROM review_logs');
