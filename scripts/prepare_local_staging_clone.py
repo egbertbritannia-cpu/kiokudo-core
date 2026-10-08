@@ -75,6 +75,10 @@ def prepare_local_clone(
     # inspect() enforces checkpointed, immutable read-only file access.
     before = inspect(source)
     source_file = Path(source).resolve(strict=True)
+    # immutable SQLite ignores external WAL, so it cannot safely represent
+    # a complete exported snapshot while sidecar files are present.
+    if Path(str(source_file) + "-wal").exists() or Path(str(source_file) + "-shm").exists():
+        raise ValueError("Source has WAL/SHM sidecars; use a verified checkpointed export")
     if source_file == destination or source_file == report_path:
         raise ValueError("Source, destination and report must be distinct files")
     if before["file_sha256"].lower() != expected_source_sha256.lower():
