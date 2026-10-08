@@ -100,3 +100,36 @@ test('unexpected log insert failure rolls back card update (no non-transaction f
     assert.equal(Number(log.rows[0].n),0);
   }finally{await app.close();await cx.close();}
 });
+
+test('same eventId without reviewedAt can be retried idempotently', async()=>{
+  const cx=await setupReviewDb(),app=buildApp({serviceToken:token,database:cx});
+  const payload={eventId:'client-event-without-time',cardId:'card-a',rating:'Good'};
+  try {
+    const first=await app.inject({method:'POST',url:'/api/v1/reviews',headers:auth,payload});
+    const duplicate=await app.inject({method:'POST',url:'/api/v1/reviews',headers:auth,payload});
+    assert.equal(first.statusCode,200,first.body);
+    assert.equal(duplicate.statusCode,200,duplicate.body);
+    assert.equal(first.json().status,'applied');
+    assert.equal(duplicate.json().status,'duplicate');
+    const c=await cx.client.execute('SELECT COUNT(*) n FROM review_logs');
+    assert.equal(Number(c.rows[0].n),1);
+  }finally {await app.close();await cx.close();}
+});
+
+test('batch is all-or-nothing when second event fails at persistence layer', async()=>{
+  const cx=await setupReviewDb(),app=buildApp({serviceToken:token,database:cx});
+  try {
+    await cx.client.execute(`CREATE TRIGGER reject_second BEFORE INSERT ON review_logs
+      WHEN NEW.id = 'fail-second'
+      BEGIN SELECT RAISE(ABORT,'deliberate second batch fault'); END;`);
+    const r=await app.inject({method:'POST',url:'/api/v1/reviews/batch',headers:auth,payload:{reviews:[
+      {eventId:'first-okay',cardId:'card-a',rating:'Good',reviewedAt:'2026-10-08T10:00:00.000Z'},
+      {eventId:'fail-second',cardId:'card-a',rating:'Good',reviewedAt:'2026-10-09T10:00:00.000Z'},
+    ]}});
+    assert.equal(r.statusCode,500,r.body);
+    const logs=await cx.client.execute('SELECT COUNT(*) n FROM review_logs');
+    assert.equal(Number(logs.rows[0].n),0);
+    const cards=await cx.client.execute({sql:'SELECT reps FROM cards WHERE id = ?',args:['card-a']});
+    assert.equal(Number(cards.rows[0].reps),0);
+  }finally {await app.close();await cx.close();}
+});
