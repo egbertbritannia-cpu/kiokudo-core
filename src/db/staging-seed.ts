@@ -10,7 +10,7 @@ export interface SeedManifest {
   kind: 'git-json-rehearsal-not-production';
   sourceCommit: string;
   source: { path: string; records: number; sha256: string }[];
-  expected: { decks: number; cards: number; reviewLogs: 0 };
+  expected: { decks: number; cards: number; reviewLogs: 0; missingReadings: number };
   databaseFile: string;
 }
 type Vocab = { word: string; reading: string; meaning: string; topic?: string; page?: number; type?: string; pitch?: string; sentence?: string };
@@ -29,7 +29,7 @@ function safeItems(raw: unknown, path: string): Vocab[] {
   return raw.map((r,i) => {
     if (!r || typeof r !== 'object' ||
       typeof r.word !== 'string' || !r.word.trim() ||
-      typeof r.reading !== 'string' || !r.reading.trim() ||
+      typeof r.reading !== 'string' ||
       typeof r.meaning !== 'string' || !r.meaning.trim()) {
       throw new Error(`Invalid vocabulary row ${i} in ${path}`);
     }
@@ -69,7 +69,7 @@ export async function seedLocalStaging(output: string, fixtureDir: string): Prom
             .digest('hex').slice(0,24);
           await tx.insert(cards).values({
             id,deckId:dataset.deckId,type:item.type??'Vocab',
-            front:item.word,reading:item.reading,meaning:item.meaning,
+            front:item.word,reading:item.reading.trim() || null,meaning:item.meaning,
             pitch:item.pitch??null,sentence:item.sentence??null,
             tags:JSON.stringify([dataset.name,item.topic??'',item.page??''].filter(Boolean)),
             stability:0,difficulty:0,elapsedDays:0,scheduledDays:0,
@@ -83,7 +83,8 @@ export async function seedLocalStaging(output: string, fixtureDir: string): Prom
     const manifest:SeedManifest={
       kind:'git-json-rehearsal-not-production',sourceCommit,
       source:parsed.map(p=>({path:p.name,records:p.list.length,sha256:p.sha256})),
-      expected:{decks:parsed.length,cards:count,reviewLogs:0},
+      expected:{decks:parsed.length,cards:count,reviewLogs:0,
+        missingReadings:parsed.reduce((n,p)=>n+p.list.filter(x=>!x.reading.trim()).length,0)},
       databaseFile:file,
     };
     await writeFile(file+'.manifest.json',JSON.stringify(manifest,null,2)+'\n',{flag:'wx'});
@@ -115,10 +116,12 @@ export async function auditLocalStaging(output:string, manifest:SeedManifest) {
       reviewLogs:await query('SELECT COUNT(*) n FROM review_logs'),
       nonNew:await query("SELECT COUNT(*) n FROM cards WHERE state <> 'New'"),
       orphanCards:await query('SELECT COUNT(*) n FROM cards c LEFT JOIN decks d ON c.deck_id=d.id WHERE d.id IS NULL'),
+      missingReadings:await query("SELECT COUNT(*) n FROM cards WHERE reading IS NULL OR TRIM(reading) = ''"),
     };
     const passed=actual.decks===manifest.expected.decks &&
       actual.cards===manifest.expected.cards &&
       actual.reviewLogs===manifest.expected.reviewLogs &&
+      actual.missingReadings===manifest.expected.missingReadings &&
       actual.nonNew===0 && actual.orphanCards===0;
     return {passed,kind:manifest.kind,expected:manifest.expected,actual};
   }finally{cx.client.close();}
