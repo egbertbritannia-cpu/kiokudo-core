@@ -56,7 +56,7 @@ test('actual Core startup fails before request serving when local staging marker
     const {buildApp}=await import('../src/app.js');
     const app=buildApp({serviceToken:'test-only-service-token-minimum-length'});
     try {
-      await assert.rejects(()=>app.ready(),/identity mismatch/);
+      await assert.rejects(async()=>{ await app.ready(); },/identity mismatch/);
     } finally {await app.close();}
   }finally{
     for(const key of keys){const old=saved[key];if(old===undefined)delete process.env[key];else process.env[key]=old;}
