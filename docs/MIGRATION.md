@@ -12,7 +12,12 @@ Legacy baseline: `japanese-srs-system` @ `3348f4ee49c9539fb9ea60c96e42833811c325
 - DB-resident staging marker checked in Fastify `onReady` before accepting
   requests. No remote DB marker DDL is performed automatically.
 - Read-only comparison of **checkpointed exports**: all application tables,
-  definitions, indexes, foreign keys, count and row-value hashes.
+  definitions, indexes, foreign keys, count, row-value hashes, raw DDL,
+  SQLite triggers and views.
+- Offline snapshot cloning: checks a separately recorded SHA-256, creates a
+  fresh local SQLite copy preserving original IDs/history, adds a local-only
+  staging identity marker, then rejects any content/schema divergence.
+  See [offline clone rehearsal](OFFLINE_CLONE_REHEARSAL.md).
 - Pure FSRS scheduling reference parity against exact legacy source commit.
   See [scope / exclusions](FSRS_PARITY_SCOPE.md).
 
@@ -23,6 +28,7 @@ Legacy baseline: `japanese-srs-system` @ `3348f4ee49c9539fb9ea60c96e42833811c325
 | Database marker gate + negative tests | Under CI validation |
 | Full schema/data audit tool | Under CI validation |
 | Pure FSRS calculation parity | Under CI validation |
+| Offline clone rehearsal with test snapshots | Complete in code; CI validation pending |
 | Real production Turso checkpointed export | **NOT AVAILABLE** |
 | Independent Turso staging instance & verification | **NOT AVAILABLE** |
 | Preserve original production card IDs and review history | **NOT DONE** |
