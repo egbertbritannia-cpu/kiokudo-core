@@ -22,7 +22,7 @@ test('staging config refuses mislabelled production, missing marker/token and fi
 });
 
 test('read-only DB marker query rejects wrong, absent or duplicate identity',async()=>{
-  const client=createDatabaseConnection(':memory:').client;
+  const client=createDatabaseConnection('file::memory:').client;
   try {
     await assert.rejects(()=>verifyStagingDatabaseIdentity(client,secret),/identity row/);
     await client.execute('CREATE TABLE kiokudo_deployment_identity (environment TEXT PRIMARY KEY, marker TEXT NOT NULL)');
