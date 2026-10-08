@@ -53,6 +53,6 @@ npm run build
 
 ## Migration safety
 
-See [Migration Gates](docs/MIGRATION.md), [DB staging identity and read-only snapshot audit](docs/DB_SNAPSHOT_PARITY.md), [FSRS reference parity scope](docs/FSRS_PARITY_SCOPE.md), [schema review](migrations/README.md), and [OpenAPI contract](contracts/openapi.yaml).
+See [Migration Gates](docs/MIGRATION.md), [offline staging clone rehearsal](docs/OFFLINE_CLONE_REHEARSAL.md), [DB staging identity and read-only snapshot audit](docs/DB_SNAPSHOT_PARITY.md), [FSRS reference parity scope](docs/FSRS_PARITY_SCOPE.md), [schema review](migrations/README.md), and [OpenAPI contract](contracts/openapi.yaml).
 
 **Not yet migrated:** IELTS, Grammar/JPD133 special-case creation parity, Google OAuth, media, staging Turso data reconciliation, FE real-data integration and production cutover.

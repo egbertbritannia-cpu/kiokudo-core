@@ -29,7 +29,7 @@ python3 scripts/audit_snapshots.py \
 ```
 
 Exit 0: required entities exist and all application tables, column definitions,
-foreign keys, indexes, row counts and content hashes agree.
+foreign keys, indexes, raw schema DDL (including views/triggers), row counts\nand content hashes agree. The SQLite sequence state, when present, is\nalso compared.
 Exit 1: parity failure, **BLOCK cutover**.
 Exit 2: missing/invalid file or report already exists, **BLOCK cutover**.
 

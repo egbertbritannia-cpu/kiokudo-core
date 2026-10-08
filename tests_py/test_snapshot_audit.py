@@ -73,6 +73,24 @@ class SnapshotAuditTests(unittest.TestCase):
             self.assertFalse(result["passed"])
             self.assertTrue(any(d["kind"]=="indexes" for d in result["differences"]))
 
+    def test_modified_view_or_trigger_blocks_schema_parity(self):
+        with tempfile.TemporaryDirectory() as d:
+            a,b = Path(d)/"baseline.db", Path(d)/"stage.db"
+            build_file(a)
+            build_file(b, True)
+            for file in (a,b):
+                cx=sqlite3.connect(file)
+                cx.execute("CREATE VIEW cards_visible AS SELECT id FROM cards")
+                cx.execute("CREATE TRIGGER no_change BEFORE DELETE ON review_logs BEGIN SELECT RAISE(ABORT,'x'); END")
+                cx.commit();cx.close()
+            cx=sqlite3.connect(b)
+            cx.execute("DROP VIEW cards_visible")
+            cx.execute("CREATE VIEW cards_visible AS SELECT id, state FROM cards")
+            cx.commit();cx.close()
+            result=audit.compare(audit.inspect(str(a)),audit.inspect(str(b)))
+            self.assertFalse(result["passed"])
+            self.assertTrue(any(x["kind"]=="schema_objects" for x in result["differences"]))
+
     def test_incomplete_schema_not_accepted_even_if_files_identical(self):
         with tempfile.TemporaryDirectory() as d:
             a,b=Path(d)/"baseline.db",Path(d)/"stage.db"
