@@ -28,6 +28,8 @@ test('Git JSON rehearsal creates audited SQLite and cards API reads it',async()=
     assert.equal(manifest.source[0].records,256);
     assert.equal(manifest.source[1].records,60);
     assert.equal(report.actual.cards,316);
+    assert.equal(manifest.expected.missingReadings,22);
+    assert.equal(report.actual.missingReadings,22);
     assert.equal(report.passed,true);
     const saved=JSON.parse(await readFile(file+'.manifest.json','utf8'));
     assert.deepEqual(saved.expected,manifest.expected);
