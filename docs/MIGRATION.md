@@ -1,41 +1,45 @@
-# Kiokudo Core — migration gates
+# Kiokudo Core — Phase 2 migration gates
 
-Source baseline: `egbertbritannia-cpu/japanese-srs-system` commit `3348f4ee49c9539fb9ea60c96e42833811c325ca`.
+Baseline: `egbertbritannia-cpu/japanese-srs-system` commit `3348f4ee49c9539fb9ea60c96e42833811c325ca`.
 
-## Owned by core after migration
+## Implemented in this branch (staging-only)
 
-- Fastify REST endpoints under `/api/v1`
-- Authoritative FSRS review mutation: `src/services/review-service.ts`
-- Turso/libSQL + Drizzle schema, migrations and repositories
-- Cards **read** APIs and learning services (no user-facing Add Card)
-- Grammar, JPD133 curriculum, IELTS sessions and analysis
-- Google OAuth/Sheets/Calendar/Tasks, media allowlist, AI provider calls
-- Admin-only crawler/import/maintenance tooling kept outside API runtime
+- Exact Drizzle schema port: `src/db/schema.ts` (legacy source preserved).
+- Explicit local/staging libSQL connection. `KIOKUDO_DATABASE_SCOPE=staging` required to open a configured URL.
+- Fastify `GET /api/v1/cards`, `POST /api/v1/reviews`, `POST /api/v1/reviews/batch`.
+- Canonical ts-fsrs scheduling plus immutable review events, single-transaction DB mutations and sorted offline batch replay.
+- Mock-free integration tests against fresh temporary SQLite files, including duplicate replay and forced DB failure.
 
-## Cutover invariants
+## Invariants / intended differences
 
-1. No browser-side Turso, Google or AI secrets. No public browser-to-core direct calls.
-2. FE connects via same-origin protected Next.js BFF with a server-side service credential.
-3. Review POST uses canonical server-side FSRS and stable event IDs; retry cannot double-review.
-4. Offline Dexie event replay must be idempotent, including batch path.
-5. Card IDs must be genuine DB IDs; do not persist synthetic curriculum IDs.
-6. Add Card remains decommissioned. Studio Shodo is a demo and must not silently become a persistent mutation.
-7. Before using real Turso credentials: staging DB, data reconciliation, migration dry-run and rollback.
-8. Fix/triage inherited CI failures before production cutover.
-9. Test Google OAuth callback/redirect URIs in the new hosting topology.
-10. The legacy repo and Vercel deployment remain untouched until acceptance.
+- The new service never retries a failed transaction outside of a transaction. Legacy version caught arbitrary transaction failures and applied changes using a non-atomic fallback.
+- Browser `scheduledDays` is ignored; FSRS server transition is authoritative.
+- Duplicate event IDs with a different card/rating/reviewedAt are rejected (409).
+- Batch replay requires stable event IDs; all successful entries are committed atomically.
+- No on-demand synthetic grammar card insertion or Add Card. Grammar-practice migration must map to genuine persistent card IDs first.
+- No production DB credentials have been installed; without explicit staging DB, the API returns 503 for business routes.
+- These endpoints are not a production drop-in replacement until cross-repo integration, data reconciliation and parity tests complete.
 
-## Gate status
+## Gate checklist
 
 | Gate | Status |
 | --- | --- |
-| Repo bootstrap + security boundary | Implemented; CI verification pending |
-| Contract for existing business API | Pending |
-| Database/repository migration | Pending |
-| Canonical ReviewService port | Pending |
-| Offline replay contract tests | Pending |
-| OAuth/media integrations | Pending |
-| End-to-end checks | Pending |
-| Production cutover | **Not authorized** |
+| Repo bootstrap / fail-closed service auth | Done |
+| Schema port | Done (DDL migration parity review pending) |
+| ReviewService + staging REST APIs | Implemented; CI validation required |
+| Staging local SQLite integration tests | Implemented; CI validation required |
+| Offline batch idempotency | Implemented; advanced concurrent replay tests pending |
+| Staging Turso schema audit / data reconciliation | Pending |
+| Grammar special-case migration | Pending |
+| Google OAuth / media / IELTS APIs | Pending |
+| FE live-data migration via BFF | Pending |
+| Production cutover | **NOT AUTHORIZED** |
 
-This repository contains a runnable **skeleton**, not a drop-in replacement backend.
+## Migration safety
+
+1. Keep original Turso untouched.
+2. Never point this migration build at the production Turso instance.
+3. Copy + verify full data, validate DDL separately, compare review logs and card IDs.
+4. Create staging backend identity credential and lock down FE BFF access before any external deployment.
+5. Capture traces for duplicate replay and atomic rollback on staging.
+6. Do not decommission `japanese-srs-system` until written approval and rollback rehearsal.
