@@ -2,6 +2,8 @@ import Fastify from 'fastify';
 import { createStagingDatabaseFromEnv, type DatabaseConnection } from './db/client.js';
 import { registerReviewRoutes } from './routes/reviews.js';
 import { registerCardsRoutes } from './routes/cards.js';
+import { registerGrammarRoutes } from './routes/grammar.js';
+import { registerIeltsReadRoutes } from './routes/ielts.js';
 import { verifyStagingDatabaseIdentity } from './db/staging-identity.js';
 
 export interface AppOptions {
@@ -54,5 +56,7 @@ export function buildApp(options: AppOptions = {}) {
 
   registerReviewRoutes(app, db);
   registerCardsRoutes(app, db);
+  registerGrammarRoutes(app, db);
+  registerIeltsReadRoutes(app, db);
   return app;
 }
