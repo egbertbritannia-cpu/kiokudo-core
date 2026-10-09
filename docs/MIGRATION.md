@@ -46,3 +46,6 @@ local exports and `scripts/audit_snapshots.py` as documented in
 [DB_SNAPSHOT_PARITY.md](DB_SNAPSHOT_PARITY.md).
 
 Legacy production must remain untouched. Do not re-enable Add Card.
+
+
+Read-only Grammar/IELTS staging contracts: [PHASE4B_READ_API.md](PHASE4B_READ_API.md).
