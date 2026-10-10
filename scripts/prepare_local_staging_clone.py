@@ -83,8 +83,10 @@ def prepare_local_clone(
         raise ValueError("Source, destination and report must be distinct files")
     if before["file_sha256"].lower() != expected_source_sha256.lower():
         raise ValueError("Source export checksum differs from expected hash")
-    if before["issues"] or not MANDATORY.issubset(before["tables"]):
+    if not MANDATORY.issubset(before["tables"]):
         raise ValueError("Source export lacks required learning tables")
+    if before["issues"]:
+        raise ValueError("Source export audit failed: " + "; ".join(before["issues"]))
     if before["staging_identity_table_present"]:
         raise ValueError("Source already carries a staging marker: not a clean baseline export")
 
