@@ -92,14 +92,34 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
         if(state.revision!==p.expectedRevision)return {code:409,body:{...error('revision_conflict'),currentRevision:state.revision}};
         const now=new Date(), next=state.revision+1;
         if(action==='draft'){
-          // Replace the full draft in one DB transaction; no individual answer leaks.
-          await tx.delete(ieltsPracticeLogs).where(eq(ieltsPracticeLogs.sessionId,sessionId));
+          // Full draft replacement with STABLE question-log IDs: preserving rows
+          // avoids breaking mistake.log_id foreign keys on later revisions.
+          const existing=await tx.select().from(ieltsPracticeLogs)
+            .where(eq(ieltsPracticeLogs.sessionId,sessionId));
+          const byNumber=new Map(existing.map(row=>[row.questionNumber,row]));
+          const wanted=new Set(entries.map(row=>row.number));
+          for(const previous of existing){
+            if(!wanted.has(previous.questionNumber)){
+              const [linked]=await tx.select({id:ieltsMistakes.id})
+                .from(ieltsMistakes).where(eq(ieltsMistakes.logId,previous.id)).limit(1);
+              if(linked)return {code:409,body:error('draft_question_has_saved_analysis')};
+              await tx.delete(ieltsPracticeLogs).where(eq(ieltsPracticeLogs.id,previous.id));
+            }
+          }
           for(const answer of entries){
-            await tx.insert(ieltsPracticeLogs).values({
-              id:sessionId+'_q_'+answer.number,sessionId,questionNumber:answer.number,
-              userAnswer:answer.answer,submissionText:answer.number>=41?answer.answer:null,
-              createdAt:now,
-            });
+            const current=byNumber.get(answer.number);
+            if(current){
+              await tx.update(ieltsPracticeLogs).set({
+                userAnswer:answer.answer,
+                submissionText:answer.number>=41?answer.answer:null,
+              }).where(eq(ieltsPracticeLogs.id,current.id));
+            }else{
+              await tx.insert(ieltsPracticeLogs).values({
+                id:sessionId+'_q_'+answer.number,sessionId,questionNumber:answer.number,
+                userAnswer:answer.answer,submissionText:answer.number>=41?answer.answer:null,
+                createdAt:now,
+              });
+            }
           }
         }else{
           await tx.update(ieltsSessions).set({
