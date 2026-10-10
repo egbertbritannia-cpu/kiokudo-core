@@ -16,6 +16,8 @@ test('retired cards and flashcard review endpoints do not serve reads or writes'
       ['POST','/api/v1/reviews'],
       ['POST','/api/v1/reviews/batch'],
       ['POST','/api/v1/reviews/test-event/undo'],
+      ['GET','/api/v1/curriculum/jpd133/mappings'],
+      ['POST','/api/v1/curriculum/jpd133/mappings'],
     ] as const){
       const result = await app.inject({ method, url,
         headers: fixtureHeaders(method,url,token), payload: method === 'POST' ? {} : undefined });
