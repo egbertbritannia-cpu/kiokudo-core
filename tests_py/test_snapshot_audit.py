@@ -26,7 +26,7 @@ def build_file(path, include_marker=False):
     """)
     if include_marker:
         cx.execute("CREATE TABLE kiokudo_deployment_identity (environment TEXT PRIMARY KEY,marker TEXT)")
-        cx.execute("INSERT INTO kiokudo_deployment_identity VALUES ('staging','separate-safe-marker')")
+        cx.execute("INSERT INTO kiokudo_deployment_identity VALUES ('staging','separate-safe-marker-unique-2026')")
     cx.commit()
     cx.close()
 
