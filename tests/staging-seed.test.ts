@@ -6,6 +6,7 @@ import { join,resolve } from 'node:path';
 import { seedLocalStaging, auditLocalStaging, normalizeDestination } from '../src/db/staging-seed.js';
 import { createDatabaseConnection } from '../src/db/client.js';
 import { buildApp } from '../src/app.js';
+import { fixtureHeaders, setFixtureOwnerEnv } from './owner-auth-fixture.js';
 
 test('rejects remote and existing destinations for fixture import',async()=>{
   assert.throws(()=>normalizeDestination('libsql://production.turso.io'),/NEW local/);
@@ -34,10 +35,11 @@ test('Git JSON rehearsal creates audited SQLite and cards API reads it',async()=
     const saved=JSON.parse(await readFile(file+'.manifest.json','utf8'));
     assert.deepEqual(saved.expected,manifest.expected);
     const cx=createDatabaseConnection('file:'+file);
+    setFixtureOwnerEnv();
     const app=buildApp({serviceToken:'long-testing-token-do-not-use-in-production',database:cx});
     try {
       const r=await app.inject({method:'GET',url:'/api/v1/cards?deck=fixture_jpd133&limit=500',
-       headers:{authorization:'Bearer long-testing-token-do-not-use-in-production'}});
+       headers:fixtureHeaders('GET','/api/v1/cards?deck=fixture_jpd133&limit=500','long-testing-token-do-not-use-in-production')});
       assert.equal(r.statusCode,200,r.body);
       const payload=r.json();
       assert.equal(payload.data.length,256);
