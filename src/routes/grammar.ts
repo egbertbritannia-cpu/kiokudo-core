@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { asc, eq, inArray } from 'drizzle-orm';
 import type { Database } from '../db/client.js';
-import { cards, grammarExercises, grammarLessons, grammarPatterns } from '../db/schema.js';
+import { grammarExercises, grammarLessons, grammarPatterns } from '../db/schema.js';
 
 function parseJsonField(input: string | null | undefined): unknown {
   if (!input) return null;
@@ -26,19 +26,15 @@ export function registerGrammarRoutes(app: FastifyInstance, db?: Database) {
   app.get('/api/v1/grammar', async (_req, reply) => {
     if (!db) return reply.code(503).send(unavailable);
     try {
-      const [lessons, patterns, grammarCards] = await Promise.all([
+      const [lessons, patterns, exercises] = await Promise.all([
         db.select().from(grammarLessons).orderBy(asc(grammarLessons.lessonNumber)),
         db.select().from(grammarPatterns).orderBy(asc(grammarPatterns.lessonId),asc(grammarPatterns.patternNumber)),
-        db.select().from(cards).where(eq(cards.deckId,'grammar_jpd133')),
+        db.select({patternId:grammarExercises.patternId}).from(grammarExercises),
       ]);
-      const now=Date.now();
       const enriched=lessons.map(l=>{
-        const list=grammarCards.filter(c=>typeof c.tags==='string' && c.tags.includes(`lesson-${l.id}`));
+        const patternIds=new Set(patterns.filter(p=>p.lessonId===l.id).map(p=>p.id));
         return {...l,stats:{
-          totalCards:list.length,
-          dueCards:list.filter(c=>c.due.getTime()<=now).length,
-          newCards:list.filter(c=>c.state==='New').length,
-          masteryRate:list.length ? Math.round(list.filter(c=>c.stability>10).length/list.length*100):0,
+          totalExercises:exercises.filter(e=>patternIds.has(e.patternId)).length,
         }};
       });
       const patternSummary=patterns.map(p=>({
@@ -51,10 +47,7 @@ export function registerGrammarRoutes(app: FastifyInstance, db?: Database) {
         stats:{
           totalLessons:lessons.length,
           totalPatterns:lessons.reduce((n,l)=>n+l.patternCount,0),
-          totalCards:grammarCards.length,
-          dueCards:grammarCards.filter(c=>c.due.getTime()<=now).length,
-          newCards:grammarCards.filter(c=>c.state==='New').length,
-          reviewCards:grammarCards.filter(c=>c.state==='Review').length,
+          totalExercises:exercises.length,
         },
         patterns:patternSummary,
       });
