@@ -204,3 +204,13 @@ Body `{"sessionId":"...","category":"Vocabulary","rootCause":"...","actionPlan":
 ## 8. Machine-readable endpoint registry
 
 Complete `28` declared Web-auth/Core routes (all methods and paths including these new endpoints) are enumerated in [API_ENDPOINTS.yaml](API_ENDPOINTS.yaml). The YAML index and this Markdown file must be updated **together** whenever endpoints change. This contract was authored from feature-branch source, not from an executed test or verified deployment.
+
+
+## 9. Schema consistency notes for FE
+
+- IELTS session detail GET includes `revision:number|null` and `scoreSource:'manual'|null`; `revision=null` means the additive mutation state is not available, and the FE must refuse write attempts instead of guessing a version.
+- IELTS full draft PUT updates existing question logs in place to preserve `logId` foreign keys. Removing a question with an associated saved mistake fails `409 draft_question_has_saved_analysis` and leaves the previous state unchanged.
+- Submission requires a previously acknowledged draft (revision at least one); otherwise `409 draft_required_before_submit`. A retry with an existing completed session must reconcile the canonical GET detail before clearing local draft.
+- Lost-response retries preserve the same request ID **and the same frozen draft payload**. A newer edit cannot reuse an older request ID without a new revision.
+- Manual IELTS score may update only Reading/Listening after submission. It is explicitly attributed to user-entered scoring; not an AI-generated or validated exam band.
+- All endpoint paths are indexed in [API_ENDPOINTS.yaml](API_ENDPOINTS.yaml) (28 total); keep Markdown+YAML synchronized.
