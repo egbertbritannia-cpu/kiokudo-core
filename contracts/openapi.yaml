@@ -37,15 +37,6 @@ paths:
       summary: Save validated exercise attempt (writes explicitly gated)
       security: [{ServiceBearer: [], OwnerAssertion: []}]
       responses: {'200': {description: Attempt recorded}, '403': {description: Writes disabled}}
-  /api/v1/curriculum/jpd133/mappings:
-    get:
-      summary: Read verified curriculum mapping metadata
-      security: [{ServiceBearer: [], OwnerAssertion: []}]
-      responses: {'200': {description: Curriculum mappings}}
-    post:
-      summary: Import verified curriculum mapping (operator gated)
-      security: [{ServiceBearer: [], OwnerAssertion: []}]
-      responses: {'201': {description: Imported}, '403': {description: Import disabled}}
   /api/v1/ielts/dashboard:
     get:
       summary: IELTS learning overview
