@@ -7,7 +7,7 @@ export async function setupReviewDb() {
   const dir=await mkdtemp(join(tmpdir(),'kiokudo-review-'));
   const connection=createDatabaseConnection('file:'+join(dir,'review.db'));
   const {client}=connection;
-  // Minimal DDL for 3 core entities only. NEVER execute on production.
+  // Minimal fixture schema supporting retained JPD133 mapping tests. NEVER execute on production.
   await client.execute('PRAGMA foreign_keys = ON');
   await client.execute(`CREATE TABLE decks (
     id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT, created_at INTEGER NOT NULL
@@ -27,6 +27,10 @@ export async function setupReviewDb() {
     stability REAL NOT NULL, difficulty REAL NOT NULL, elapsed_days INTEGER NOT NULL,
     last_elapsed_days INTEGER NOT NULL, scheduled_days INTEGER NOT NULL,
     review_time INTEGER NOT NULL
+  )`);
+  await client.execute(`CREATE TABLE kiokudo_jpd133_card_links (
+    source_key TEXT PRIMARY KEY,slot_number INTEGER NOT NULL,source_page INTEGER NOT NULL,
+    card_id TEXT NOT NULL REFERENCES cards(id),created_at INTEGER NOT NULL
   )`);
   const now=Math.floor(Date.parse('2026-10-08T00:00:00.000Z')/1000);
   await client.execute({sql:'INSERT INTO decks (id,name,description,created_at) VALUES (?,?,?,?)',args:['jpd','JPD133','Test deck',now]});
