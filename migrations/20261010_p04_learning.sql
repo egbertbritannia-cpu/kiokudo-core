@@ -28,4 +28,16 @@ CREATE TABLE IF NOT EXISTS kiokudo_ielts_mutation_state (
   last_response TEXT NOT NULL,
   updated_at INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS kiokudo_review_undo_snapshots (
+  event_id TEXT PRIMARY KEY NOT NULL,
+  card_id TEXT NOT NULL REFERENCES cards(id) ON DELETE CASCADE,
+  before_json TEXT NOT NULL,
+  reviewed_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_kiokudo_review_undo_card_id ON kiokudo_review_undo_snapshots(card_id);
+CREATE TABLE IF NOT EXISTS kiokudo_review_undo_tombstones (
+  event_id TEXT PRIMARY KEY NOT NULL,
+  card_id TEXT NOT NULL,
+  undone_at INTEGER NOT NULL
+);
 COMMIT;
