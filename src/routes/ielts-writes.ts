@@ -39,7 +39,8 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
       const outcome=await db.transaction(async tx=>{
         const [prev]=await tx.select().from(ieltsSessions).where(eq(ieltsSessions.id,sessionId)).limit(1);
         if(prev){
-          if(prev.section!==section||prev.testType!==testType||prev.materialId!==(p.materialId??null))
+          if(prev.section!==section||prev.testType!==testType||
+            prev.materialId!==(p.materialId??null)||prev.testNumber!==(p.testNumber??null))
             return {code:409,body:error('session_id_conflict')};
           const [previousMutation]=await tx.select().from(ieltsMutationState)
             .where(eq(ieltsMutationState.sessionId,sessionId)).limit(1);
@@ -87,6 +88,7 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
           return previous?{code:200,body:previous}:{code:503,body:error('invalid_stored_ack')};
         }
         if(session.sessionStatus!=='in_progress')return {code:409,body:error('session_already_submitted')};
+        if(action==='submit'&&state.revision===0)return {code:409,body:error('draft_required_before_submit')};
         if(state.revision!==p.expectedRevision)return {code:409,body:{...error('revision_conflict'),currentRevision:state.revision}};
         const now=new Date(), next=state.revision+1;
         if(action==='draft'){
