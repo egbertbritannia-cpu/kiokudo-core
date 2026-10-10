@@ -28,6 +28,15 @@ export async function setupReviewDb() {
     last_elapsed_days INTEGER NOT NULL, scheduled_days INTEGER NOT NULL,
     review_time INTEGER NOT NULL
   )`);
+  await client.execute(`CREATE TABLE kiokudo_review_undo_snapshots (
+    event_id TEXT PRIMARY KEY NOT NULL,
+    card_id TEXT NOT NULL REFERENCES cards(id),
+    before_json TEXT NOT NULL,
+    reviewed_at INTEGER NOT NULL
+  )`);
+  await client.execute(`CREATE TABLE kiokudo_review_undo_tombstones (
+    event_id TEXT PRIMARY KEY NOT NULL,card_id TEXT NOT NULL,undone_at INTEGER NOT NULL
+  )`);
   const now=Math.floor(Date.parse('2026-10-08T00:00:00.000Z')/1000);
   await client.execute({sql:'INSERT INTO decks (id,name,description,created_at) VALUES (?,?,?,?)',args:['jpd','JPD133','Test deck',now]});
   await client.execute({
