@@ -1,11 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildApp } from '../src/app.js';
+import { fixtureHeaders, setFixtureOwnerEnv } from './owner-auth-fixture.js';
 import { setupReviewDb } from './fixtures.js';
 
 const token='phase4b-local-service-token-at-least-24-chars';
-const headers={authorization:`Bearer ${token}`};
-const go=(app:ReturnType<typeof buildApp>,url:string)=>app.inject({method:'GET',url,headers});
+setFixtureOwnerEnv();
+const go=(app:ReturnType<typeof buildApp>,url:string)=>app.inject({method:'GET',url,headers:fixtureHeaders('GET',url,token)});
 
 async function setup(){
  const cx=await setupReviewDb();
@@ -93,7 +94,7 @@ test('Grammar endpoints preserve lesson, pattern and exercise response contracts
   assert.deepEqual(exercises.json().exercises[0].alternateAnswers,['desu']);
   assert.equal((await go(app,'/api/v1/grammar/not-found')).statusCode,404);
   assert.equal((await go(app,'/api/v1/grammar/practice?limit=999999')).statusCode,400);
-  assert.equal((await app.inject({method:'POST',url:'/api/v1/grammar/practice',headers,payload:{}})).statusCode,404);
+  assert.equal((await app.inject({method:'POST',url:'/api/v1/grammar/practice',headers:fixtureHeaders('POST','/api/v1/grammar/practice',token),payload:{}})).statusCode,404);
  }finally{await app.close();await cx.close();}
 });
 
@@ -136,7 +137,7 @@ test('IELTS reads recorded sessions and rejects write operations',async()=>{
   assert.equal(session.json().data.id,'session1');
   assert.equal((await go(app,'/api/v1/ielts/sessions/unknown')).statusCode,404);
   for(const path of ['/api/v1/ielts/sessions','/api/v1/ielts/materials','/api/v1/ielts/vocab']){
-   assert.equal((await app.inject({method:'POST',url:path,headers,payload:{}})).statusCode,404);
+   assert.equal((await app.inject({method:'POST',url:path,headers:fixtureHeaders('POST',path,token),payload:{}})).statusCode,404);
   }
  }finally{await app.close();await cx.close();}
 });
