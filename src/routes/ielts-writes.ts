@@ -42,7 +42,11 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
         if(prev){
           if(prev.section!==section||prev.testType!==testType||prev.materialId!==(p.materialId??null))
             return {code:409,body:error('session_id_conflict')};
-          return {code:200,body:{success:true,status:'duplicate',data:{id:prev.id,revision:0,sessionStatus:prev.sessionStatus}}};
+          const [previousMutation]=await tx.select().from(ieltsMutationState)
+            .where(eq(ieltsMutationState.sessionId,sessionId)).limit(1);
+          return {code:200,body:{success:true,status:'duplicate',data:{
+            id:prev.id,revision:previousMutation?.revision??0,sessionStatus:prev.sessionStatus,
+          }}};
         }
         const now=new Date();
         await tx.insert(ieltsSessions).values({
