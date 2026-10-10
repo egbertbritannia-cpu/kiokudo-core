@@ -1,3 +1,5 @@
+> **FEATURE RETIREMENT (2026-10-10):** `/api/v1/cards`, `/api/v1/reviews`, batch and undo are **removed** from Core and Web. Any older flashcard examples below are historical and MUST NOT be used for new integration. Live route inventory: [OpenAPI](../contracts/openapi.yaml). The retained Grammar/JPD133/IELTS endpoints do not require adding or studying flashcards.
+
 # Kiokudo API contract — FE ↔ BFF ↔ Core (Phase 01–04)
 
 **Version:** draft `2026-10-10-p01-p04` · **Owner:** single-owner staged dataset · **Status:** CODE_WRITTEN_UNTESTED. This is the integration contract, **not** an assertion that staging or production is configured. Source branches must be reviewed and built before merge. No production migration or deployment is authorized.
