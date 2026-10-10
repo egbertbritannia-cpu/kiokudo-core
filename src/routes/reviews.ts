@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import type { Database } from '../db/client.js';
 import {
-  ReviewServiceError, submitReview, submitReviewBatch, type SubmitReviewInput,
+  ReviewServiceError, submitReview, submitReviewBatch, undoReview, type SubmitReviewInput,
 } from '../services/review-service.js';
 
 function asPayload(body: unknown): Record<string, any> {
@@ -44,6 +44,17 @@ export function registerReviewRoutes(app: FastifyInstance, db: Database | undefi
       });
     } catch (error) {
       const e = respondError(error, app);
+      return reply.code(e.status).send(e.body);
+    }
+  });
+
+  app.post<{Params:{eventId:string}}>('/api/v1/reviews/:eventId/undo', async(request,reply)=>{
+    if(!db)return reply.code(503).send({error:'staging_database_not_configured'});
+    try{
+      const result=await undoReview(db,request.params.eventId);
+      return reply.send({success:true,...result});
+    }catch(err){
+      const e=respondError(err,app);
       return reply.code(e.status).send(e.body);
     }
   });

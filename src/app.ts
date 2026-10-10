@@ -4,6 +4,8 @@ import { registerReviewRoutes } from './routes/reviews.js';
 import { registerCardsRoutes } from './routes/cards.js';
 import { registerGrammarRoutes } from './routes/grammar.js';
 import { registerIeltsReadRoutes } from './routes/ielts.js';
+import { registerIeltsWriteRoutes } from './routes/ielts-writes.js';
+import { registerLearningRoutes } from './routes/learning-writes.js';
 import { verifyStagingDatabaseIdentity } from './db/staging-identity.js';
 import { verifySingleOwnerRequest } from './auth/single-owner.js';
 
@@ -78,5 +80,7 @@ export function buildApp(options: AppOptions = {}) {
   registerCardsRoutes(app, db);
   registerGrammarRoutes(app, db);
   registerIeltsReadRoutes(app, db);
+  registerIeltsWriteRoutes(app, db);
+  registerLearningRoutes(app, db);
   return app;
 }
