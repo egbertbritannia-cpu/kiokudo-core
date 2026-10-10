@@ -136,7 +136,16 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
     }
     try{
       const [prior]=await db.select().from(ieltsMistakes).where(eq(ieltsMistakes.id,p.id as string)).limit(1);
-      if(prior)return reply.code(409).send(error('duplicate_mistake_id'));
+      if(prior){
+        if(prior.sessionId===p.sessionId &&
+           (prior.logId??null)===(p.logId??null) &&
+           (prior.mistakeCategory??'')===(p.category??'') &&
+           (prior.rootCauseAnalysis??'')===(p.rootCause??'') &&
+           (prior.actionPlanForImprovement??'')===(p.actionPlan??'')){
+          return reply.send({success:true,status:'duplicate',data:{id:p.id}});
+        }
+        return reply.code(409).send(error('duplicate_mistake_id'));
+      }
       const [session]=await db.select().from(ieltsSessions).where(eq(ieltsSessions.id,p.sessionId as string)).limit(1);
       if(!session)return reply.code(404).send(error('session_not_found'));
       if(p.logId){
@@ -163,7 +172,15 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
     }
     try{
       const [existing]=await db.select().from(engVocab).where(eq(engVocab.id,p.id as string)).limit(1);
-      if(existing)return reply.code(409).send(error('duplicate_vocab_id'));
+      if(existing){
+        if(existing.word===(p.word as string).trim() &&
+           (existing.sessionId??null)===(p.sessionId??null) &&
+           (existing.primaryMeaning??'')===(p.meaning??'') &&
+           (existing.partOfSpeech??'')===(p.partOfSpeech??'')){
+          return reply.send({success:true,status:'duplicate',data:{id:p.id}});
+        }
+        return reply.code(409).send(error('duplicate_vocab_id'));
+      }
       if(p.sessionId){
         const [session]=await db.select().from(ieltsSessions).where(eq(ieltsSessions.id,p.sessionId as string)).limit(1);
         if(!session)return reply.code(404).send(error('session_not_found'));
@@ -172,6 +189,8 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
         id:p.id as string,word:(p.word as string).trim(),sessionId:(p.sessionId as string|undefined)??null,
         primaryMeaning:typeof p.meaning==='string'?p.meaning.slice(0,4000):null,
         partOfSpeech:typeof p.partOfSpeech==='string'?p.partOfSpeech.slice(0,50):null,
+        phonetic:typeof p.phonetic==='string'?p.phonetic.slice(0,160):null,
+        contextSentence:typeof p.contextSentence==='string'?p.contextSentence.slice(0,1000):null,
         createdAt:new Date(),updatedAt:new Date(),
       });
       return reply.code(201).send({success:true,data:{id:p.id}});
