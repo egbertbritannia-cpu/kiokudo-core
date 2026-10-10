@@ -362,6 +362,7 @@ export const ieltsMutationState = sqliteTable('kiokudo_ielts_mutation_state', {
   sessionId: text('session_id').primaryKey().references(() => ieltsSessions.id, { onDelete: 'cascade' }),
   revision: integer('revision').notNull(),
   lastRequestId: text('last_request_id').notNull(),
+  scoreSource: text('score_source'), // 'manual' for explicit learner-entered estimated scores
   lastResponse: text('last_response').notNull(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),
 });
