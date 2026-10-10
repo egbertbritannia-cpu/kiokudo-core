@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type { FastifyInstance } from 'fastify';
 import { eq } from 'drizzle-orm';
 import type { Database } from '../db/client.js';
@@ -171,4 +170,69 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
       return reply.code(201).send({success:true,data:{id:p.id}});
     }catch{return reply.code(503).send(error('ielts_write_storage_unavailable'))}
   });
+
+  // A score is user-entered / teacher-entered; no mock estimate is generated.
+  // Core stores its provenance as explicit manual scoring, not an AI prediction.
+  app.put<{Params:{id:string}}>('/api/v1/ielts/sessions/:id/score',async(req,reply)=>{
+    if(!db)return reply.code(503).send(error('staging_database_not_configured'));
+    const p=obj(req.body);
+    if(!id(req.params.id)||!p||!id(p.requestId)||
+      typeof p.expectedRevision!=='number'||!Number.isInteger(p.expectedRevision)||p.expectedRevision<0||
+      typeof p.rawScore!=='number'||!Number.isInteger(p.rawScore)||p.rawScore<0||p.rawScore>40||
+      typeof p.band!=='number'||!Number.isFinite(p.band)||p.band<0||p.band>9||
+      p.source!=='manual'){
+      return reply.code(400).send(error('invalid_manual_score'));
+    }
+    try{
+      const result=await db.transaction(async tx=>{
+        const [session]=await tx.select().from(ieltsSessions).where(eq(ieltsSessions.id,req.params.id)).limit(1);
+        const [state]=await tx.select().from(ieltsMutationState).where(eq(ieltsMutationState.sessionId,req.params.id)).limit(1);
+        if(!session||!state)return {code:404,body:error('session_not_found')};
+        if(state.lastRequestId===p.requestId){
+          const previous=parseLastResponse(state.lastResponse);
+          return {code:200,body:previous??error('invalid_stored_ack')};
+        }
+        if(session.sessionStatus==='in_progress')return {code:409,body:error('score_requires_submission')};
+        if(session.section!=='Reading'&&session.section!=='Listening')
+          return {code:409,body:error('raw_score_not_supported_for_section')};
+        if(state.revision!==p.expectedRevision)
+          return {code:409,body:{...error('revision_conflict'),currentRevision:state.revision}};
+        const revision=state.revision+1;
+        await tx.update(ieltsSessions).set({
+          rawScore:p.rawScore as number,maxScore:40,currentScoreBand:p.band as number,
+          sessionStatus:'reviewed',
+        }).where(eq(ieltsSessions.id,session.id));
+        const body={success:true,status:'manual_score_saved',requestId:p.requestId,
+          data:{sessionId:session.id,revision,rawScore:p.rawScore,band:p.band,source:'manual',sessionStatus:'reviewed'}};
+        await tx.update(ieltsMutationState).set({
+          revision,lastRequestId:p.requestId as string,lastResponse:JSON.stringify(body),updatedAt:new Date(),
+        }).where(eq(ieltsMutationState.sessionId,session.id));
+        return {code:200,body};
+      });
+      return reply.code(result.code).send(result.body);
+    }catch(err){app.log.error({err},'Manual IELTS score failed');return reply.code(503).send(error('ielts_write_storage_unavailable'))}
+  });
+
+  app.put<{Params:{id:string}}>('/api/v1/ielts/mistakes/:id',async(req,reply)=>{
+    if(!db)return reply.code(503).send(error('staging_database_not_configured'));
+    const p=obj(req.body);
+    if(!id(req.params.id)||!p||!id(p.sessionId)||typeof p.category!=='string'||p.category.length>80||
+      typeof p.rootCause!=='string'||p.rootCause.length>4000||
+      typeof p.actionPlan!=='string'||p.actionPlan.length>4000){
+      return reply.code(400).send(error('invalid_mistake'));
+    }
+    try{
+      const result=await db.transaction(async tx=>{
+        const [prior]=await tx.select().from(ieltsMistakes).where(eq(ieltsMistakes.id,req.params.id)).limit(1);
+        if(!prior||prior.sessionId!==p.sessionId)return {code:404,body:error('mistake_not_found')};
+        await tx.update(ieltsMistakes).set({
+          mistakeCategory:p.category as string,rootCauseAnalysis:p.rootCause as string,
+          actionPlanForImprovement:p.actionPlan as string,
+        }).where(eq(ieltsMistakes.id,req.params.id));
+        return {code:200,body:{success:true,status:'updated',data:{id:req.params.id}}};
+      });
+      return reply.code(result.code).send(result.body);
+    }catch{return reply.code(503).send(error('ielts_write_storage_unavailable'))}
+  });
+
 }
