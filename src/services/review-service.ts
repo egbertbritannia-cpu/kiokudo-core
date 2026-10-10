@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 import { FSRS, Rating, State, createEmptyCard, generatorParameters } from 'ts-fsrs';
-import { cards, reviewLogs } from '../db/schema.js';
+import { cards, reviewLogs, reviewUndoSnapshots, reviewUndoTombstones } from '../db/schema.js';
 import type { Database } from '../db/client.js';
 
 export type ReviewRating = 'Again' | 'Hard' | 'Good' | 'Easy';
@@ -189,6 +189,11 @@ function resultRow(input: NormalizedReviewInput, t: ReviewTransition): ReviewRes
 }
 
 async function applyWithinTransaction(tx: any, input: NormalizedReviewInput): Promise<ReviewResult> {
+  const [tombstone]=await tx.select().from(reviewUndoTombstones)
+    .where(eq(reviewUndoTombstones.eventId,input.eventId)).limit(1);
+  if(tombstone)throw new ReviewServiceError(
+    'REVIEW_ALREADY_UNDONE','This eventId was undone and cannot be replayed.',409,
+  );
   const previous = await tx.select().from(reviewLogs).where(eq(reviewLogs.id, input.eventId)).limit(1);
   if (previous.length) {
     const log = previous[0] as typeof reviewLogs.$inferSelect;
@@ -199,6 +204,16 @@ async function applyWithinTransaction(tx: any, input: NormalizedReviewInput): Pr
   }
   const card = await requireCard(tx, input.cardId);
   const t = calculateReviewTransition(card, input.rating, input.ratingEnum, input.reviewedAt);
+  // Undo data and FSRS transition are committed in the SAME transaction.
+  await tx.insert(reviewUndoSnapshots).values({
+    eventId:input.eventId,cardId:input.cardId,reviewedAt:input.reviewedAt,
+    beforeJson:JSON.stringify({
+      stability:card.stability,difficulty:card.difficulty,elapsedDays:card.elapsedDays,
+      scheduledDays:card.scheduledDays,reps:card.reps,lapses:card.lapses,
+      state:card.state,due:card.due.getTime(),lastReview:card.lastReview?.getTime()??null,
+      updatedAt:card.updatedAt.getTime(),
+    }),
+  });
 
   // The immutable review event and card state must succeed/fail together.
   await tx.update(cards).set({
@@ -261,4 +276,56 @@ export async function submitReviewBatch(db: Database, inputs: SubmitReviewInput[
     });
   }
   return inputs.map((_, i) => results.get(i)!);
+}
+
+
+/**
+ * Undo is permitted only for the latest review on the same card, with an exact
+ * persisted pre-event snapshot. Tombstones prevent a lost-response replay from
+ * silently applying the same event after undo.
+ */
+export async function undoReview(db: Database,eventId:string):Promise<{
+  eventId:string;status:'undone'|'already_undone';cardId:string;
+}>{
+  if(!/^[A-Za-z0-9_-]{1,256}$/.test(eventId))
+    throw new ReviewServiceError('INVALID_EVENT_ID','Invalid undo eventId',400);
+  return db.transaction(async tx=>{
+    const [prior]=await tx.select().from(reviewUndoTombstones)
+      .where(eq(reviewUndoTombstones.eventId,eventId)).limit(1);
+    if(prior)return {eventId,status:'already_undone' as const,cardId:prior.cardId};
+    const [log]=await tx.select().from(reviewLogs).where(eq(reviewLogs.id,eventId)).limit(1);
+    const [snapshot]=await tx.select().from(reviewUndoSnapshots)
+      .where(eq(reviewUndoSnapshots.eventId,eventId)).limit(1);
+    if(!log||!snapshot||log.cardId!==snapshot.cardId)
+      throw new ReviewServiceError('UNDO_NOT_AVAILABLE','No reversible event snapshot',404);
+    const [latest,...next]=await tx.select().from(reviewLogs)
+      .where(eq(reviewLogs.cardId,log.cardId))
+      .orderBy(desc(reviewLogs.reviewTime),desc(reviewLogs.id)).limit(2);
+    if(!latest||latest.id!==eventId||next.some((r:typeof log)=>r.reviewTime.getTime()===log.reviewTime.getTime()))
+      throw new ReviewServiceError('UNDO_NOT_LATEST','Only the unambiguous latest review can be undone',409);
+    const [card]=await tx.select().from(cards).where(eq(cards.id,log.cardId)).limit(1);
+    if(!card||card.lastReview?.getTime()!==log.reviewTime.getTime())
+      throw new ReviewServiceError('UNDO_CARD_DIVERGED','Card state differs from review history',409);
+    let old:Record<string,unknown>;
+    try{old=JSON.parse(snapshot.beforeJson) as Record<string,unknown>}
+    catch{throw new ReviewServiceError('UNDO_SNAPSHOT_INVALID','Invalid stored snapshot',500)}
+    const numeric=['stability','difficulty','elapsedDays','scheduledDays','reps','lapses','due','updatedAt'];
+    if(!numeric.every(k=>typeof old[k]==='number'&&Number.isFinite(old[k]))||
+       typeof old.state!=='string'||
+       (old.lastReview!==null&&typeof old.lastReview!=='number')){
+      throw new ReviewServiceError('UNDO_SNAPSHOT_INVALID','Invalid stored snapshot',500);
+    }
+    await tx.update(cards).set({
+      stability:old.stability as number,difficulty:old.difficulty as number,
+      elapsedDays:old.elapsedDays as number,scheduledDays:old.scheduledDays as number,
+      reps:old.reps as number,lapses:old.lapses as number,state:old.state as string,
+      due:new Date(old.due as number),
+      lastReview:old.lastReview===null?null:new Date(old.lastReview as number),
+      updatedAt:new Date(old.updatedAt as number),
+    }).where(eq(cards.id,log.cardId));
+    await tx.delete(reviewLogs).where(eq(reviewLogs.id,eventId));
+    await tx.delete(reviewUndoSnapshots).where(eq(reviewUndoSnapshots.eventId,eventId));
+    await tx.insert(reviewUndoTombstones).values({eventId,cardId:log.cardId,undoneAt:new Date()});
+    return {eventId,status:'undone' as const,cardId:log.cardId};
+  });
 }
