@@ -98,11 +98,16 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
             .where(eq(ieltsPracticeLogs.sessionId,sessionId));
           const byNumber=new Map(existing.map(row=>[row.questionNumber,row]));
           const wanted=new Set(entries.map(row=>row.number));
+          // Check ALL referenced deletions before doing the first mutation.
+          // Returning a 409 from a transaction callback is not a rollback.
+          for(const previous of existing){
+            if(wanted.has(previous.questionNumber))continue;
+            const [linked]=await tx.select({id:ieltsMistakes.id})
+              .from(ieltsMistakes).where(eq(ieltsMistakes.logId,previous.id)).limit(1);
+            if(linked)return {code:409,body:error('draft_question_has_saved_analysis')};
+          }
           for(const previous of existing){
             if(!wanted.has(previous.questionNumber)){
-              const [linked]=await tx.select({id:ieltsMistakes.id})
-                .from(ieltsMistakes).where(eq(ieltsMistakes.logId,previous.id)).limit(1);
-              if(linked)return {code:409,body:error('draft_question_has_saved_analysis')};
               await tx.delete(ieltsPracticeLogs).where(eq(ieltsPracticeLogs.id,previous.id));
             }
           }
