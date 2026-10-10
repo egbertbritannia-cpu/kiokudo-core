@@ -11,7 +11,6 @@ As of 10 October 2026, **Add Card and flashcard learning/review are removed**. N
 - `GET /api/v1/health`, `GET /api/v1/status`
 - `GET /api/v1/grammar`, `GET /api/v1/grammar/{lessonId}`, `GET /api/v1/grammar/practice`
 - `POST /api/v1/grammar/practice/attempts`
-- `GET/POST /api/v1/curriculum/jpd133/mappings` (import gated)
 - `GET /api/v1/ielts/dashboard`, `GET /api/v1/ielts/materials`, `GET /api/v1/ielts/sessions`, `GET /api/v1/ielts/sessions/{id}`, `GET /api/v1/ielts/mistakes`, `GET /api/v1/ielts/vocab`
 - `POST /api/v1/ielts/sessions`, `PUT /api/v1/ielts/sessions/{id}/draft`, `POST /api/v1/ielts/sessions/{id}/submit`, `POST /api/v1/ielts/mistakes`, `POST /api/v1/ielts/vocab`
 
