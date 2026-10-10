@@ -231,7 +231,7 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
         const body={success:true,status:'manual_score_saved',requestId:p.requestId,
           data:{sessionId:session.id,revision,rawScore:p.rawScore,band:p.band,source:'manual',sessionStatus:'reviewed'}};
         await tx.update(ieltsMutationState).set({
-          revision,lastRequestId:p.requestId as string,lastResponse:JSON.stringify(body),updatedAt:new Date(),
+          revision,lastRequestId:p.requestId as string,scoreSource:'manual',lastResponse:JSON.stringify(body),updatedAt:new Date(),
         }).where(eq(ieltsMutationState.sessionId,session.id));
         return {code:200,body};
       });
