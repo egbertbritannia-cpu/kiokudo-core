@@ -342,14 +342,6 @@ export const engVocab = sqliteTable('eng_vocab', {
 
 // Kiokudo Phase 04: additive, opt-in staging tables. Never auto-migrate production.
 // See migrations/20261010_p04_learning.sql and docs/API_CONTRACT.md.
-export const jpd133CardLinks = sqliteTable('kiokudo_jpd133_card_links', {
-  sourceKey: text('source_key').primaryKey(),
-  slotNumber: integer('slot_number').notNull(),
-  sourcePage: integer('source_page').notNull(),
-  cardId: text('card_id').notNull().references(() => cards.id),
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
-});
-
 export const grammarAttemptLogs = sqliteTable('kiokudo_grammar_attempt_logs', {
   id: text('id').primaryKey(),
   exerciseId: text('exercise_id').notNull().references(() => grammarExercises.id),
@@ -367,17 +359,3 @@ export const ieltsMutationState = sqliteTable('kiokudo_ielts_mutation_state', {
 });
 
 
-// Review undo: snapshot BEFORE each canonical grade, plus permanent replay tombstone.
-// Both use the immutable client eventId. Staging-only additive migration required.
-export const reviewUndoSnapshots = sqliteTable('kiokudo_review_undo_snapshots', {
-  eventId: text('event_id').primaryKey(),
-  cardId: text('card_id').notNull().references(() => cards.id, { onDelete: 'cascade' }),
-  beforeJson: text('before_json').notNull(),
-  reviewedAt: integer('reviewed_at', { mode: 'timestamp' }).notNull(),
-});
-
-export const reviewUndoTombstones = sqliteTable('kiokudo_review_undo_tombstones', {
-  eventId: text('event_id').primaryKey(),
-  cardId: text('card_id').notNull(),
-  undoneAt: integer('undone_at', { mode: 'timestamp' }).notNull(),
-});

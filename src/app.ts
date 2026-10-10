@@ -1,7 +1,5 @@
 import Fastify from 'fastify';
 import { createStagingDatabaseFromEnv, type DatabaseConnection } from './db/client.js';
-import { registerReviewRoutes } from './routes/reviews.js';
-import { registerCardsRoutes } from './routes/cards.js';
 import { registerGrammarRoutes } from './routes/grammar.js';
 import { registerIeltsReadRoutes } from './routes/ielts.js';
 import { registerIeltsWriteRoutes } from './routes/ielts-writes.js';
@@ -70,14 +68,12 @@ export function buildApp(options: AppOptions = {}) {
   }));
 
   app.get('/api/v1/status', async () => ({
-    service:'kiokudo-core', phase:'phase2-staging',
-    businessApisReady:false, // not all legacy APIs are migrated
-    reviewApiStagingReady: Boolean(db),
+    service:'kiokudo-core', phase:'learning-modules-staging',
+    businessApisReady:false, // migration and staging acceptance remain incomplete
+    flashcardApisAvailable: false,
     productionCutoverAllowed:false,
   }));
 
-  registerReviewRoutes(app, db);
-  registerCardsRoutes(app, db);
   registerGrammarRoutes(app, db);
   registerIeltsReadRoutes(app, db);
   registerIeltsWriteRoutes(app, db);

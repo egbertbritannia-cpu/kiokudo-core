@@ -7,7 +7,7 @@ export async function setupReviewDb() {
   const dir=await mkdtemp(join(tmpdir(),'kiokudo-review-'));
   const connection=createDatabaseConnection('file:'+join(dir,'review.db'));
   const {client}=connection;
-  // Minimal DDL for 3 core entities only. NEVER execute on production.
+  // Minimal historic card fixture used to verify the owner auth boundary. NEVER execute on production.
   await client.execute('PRAGMA foreign_keys = ON');
   await client.execute(`CREATE TABLE decks (
     id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT, created_at INTEGER NOT NULL

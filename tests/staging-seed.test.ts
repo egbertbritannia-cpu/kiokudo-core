@@ -5,8 +5,6 @@ import { tmpdir } from 'node:os';
 import { join,resolve } from 'node:path';
 import { seedLocalStaging, auditLocalStaging, normalizeDestination } from '../src/db/staging-seed.js';
 import { createDatabaseConnection } from '../src/db/client.js';
-import { buildApp } from '../src/app.js';
-import { fixtureHeaders, setFixtureOwnerEnv } from './owner-auth-fixture.js';
 
 test('rejects remote and existing destinations for fixture import',async()=>{
   assert.throws(()=>normalizeDestination('libsql://production.turso.io'),/NEW local/);
@@ -19,7 +17,7 @@ test('rejects remote and existing destinations for fixture import',async()=>{
   }finally{await rm(dir,{recursive:true,force:true});}
 });
 
-test('Git JSON rehearsal creates audited SQLite and cards API reads it',async()=>{
+test('Git JSON rehearsal creates audited SQLite without exposing a flashcard API',async()=>{
   const dir=await mkdtemp(join(tmpdir(),'kiokudo-import-')),file=join(dir,'seed.db');
   try {
     const manifest=await seedLocalStaging(file,resolve('fixtures/legacy-json'));
@@ -35,15 +33,9 @@ test('Git JSON rehearsal creates audited SQLite and cards API reads it',async()=
     const saved=JSON.parse(await readFile(file+'.manifest.json','utf8'));
     assert.deepEqual(saved.expected,manifest.expected);
     const cx=createDatabaseConnection('file:'+file);
-    setFixtureOwnerEnv();
-    const app=buildApp({serviceToken:'long-testing-token-do-not-use-in-production',database:cx});
     try {
-      const r=await app.inject({method:'GET',url:'/api/v1/cards?deck=fixture_jpd133&limit=500',
-       headers:fixtureHeaders('GET','/api/v1/cards?deck=fixture_jpd133&limit=500','long-testing-token-do-not-use-in-production')});
-      assert.equal(r.statusCode,200,r.body);
-      const payload=r.json();
-      assert.equal(payload.data.length,256);
-      assert.equal(payload.deckSummaries.find((d:any)=>d.id==='fixture_jpd133').totalCards,256);
-    }finally{await app.close();cx.client.close();}
+      const row = await cx.client.execute("SELECT COUNT(*) AS count FROM cards WHERE deck_id = 'fixture_jpd133'");
+      assert.equal(Number(row.rows[0].count),256);
+    }finally{cx.client.close();}
   }finally{await rm(dir,{recursive:true,force:true});}
 });

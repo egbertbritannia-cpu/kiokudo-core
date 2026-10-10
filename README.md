@@ -1,58 +1,29 @@
 # 記憶道 — Kiokudo Core
 
-**Independent Kiokudo backend** — Fastify, TypeScript, libSQL/Turso, Drizzle, canonical ts-fsrs ReviewService.
+Kiokudo's Fastify/TypeScript backend serves **Grammar, JPD133 curriculum and IELTS** on isolated staging.
 
-> Phase 3 safety-hardening on **staging-only infrastructure**. This repository is NOT authorized to replace the currently deployed `japanese-srs-system` backend.
+## Removed features
 
-## Quick start (API without DB)
+As of 10 October 2026, **Add Card and flashcard learning/review are removed**. No public or authenticated endpoints remain for `/api/v1/cards`, `/api/v1/reviews`, `/api/v1/reviews/batch` or `/api/v1/reviews/{eventId}/undo`. These return 404 after normal authentication. Legacy `cards`, `decks`, and `review_logs` tables may still appear in existing schemas and JSON/SQLite migration fixtures: they are **historical source data**, not a supported card-creation or flashcard-learning feature. Do not drop production tables or learner history to perform feature retirement.
+
+## Available endpoints
+
+- `GET /api/v1/health`, `GET /api/v1/status`
+- `GET /api/v1/grammar`, `GET /api/v1/grammar/{lessonId}`, `GET /api/v1/grammar/practice`
+- `POST /api/v1/grammar/practice/attempts`
+- `GET /api/v1/ielts/dashboard`, `GET /api/v1/ielts/materials`, `GET /api/v1/ielts/sessions`, `GET /api/v1/ielts/sessions/{id}`, `GET /api/v1/ielts/mistakes`, `GET /api/v1/ielts/vocab`
+- `POST /api/v1/ielts/sessions`, `PUT /api/v1/ielts/sessions/{id}/draft`, `POST /api/v1/ielts/sessions/{id}/submit`, `POST /api/v1/ielts/mistakes`, `POST /api/v1/ielts/vocab`
+
+Some additional IELTS updates are pending a separate PR; consult actual `src/routes/` modules rather than assuming every draft contract is merged.
+
+## Development
 
 ```bash
 npm install
 cp .env.example .env
-# Set a long, random KIOKUDO_SERVICE_TOKEN (24+ characters).
-npm run dev
-```
-
-Liveness: `GET /api/v1/health` (public). Migration status: `GET /api/v1/status` (Bearer token required).
-
-Without a staging DB, business routes deliberately return HTTP 503.
-
-## Staging database
-
-Set `KIOKUDO_DATABASE_SCOPE=staging`, `KIOKUDO_DATABASE_URL` and `KIOKUDO_EXPECTED_STAGING_MARKER`.
-The marker **must already exist inside the staging database** in `kiokudo_deployment_identity`, and must match the environment variable before Fastify starts serving routes.
-For remote Turso staging use a unique, separately verified marker and `KIOKUDO_DATABASE_AUTH_TOKEN`. Never reuse the public local-fixture marker for Turso.
-There are **no automatic remote migrations**. Independently verify the destination's Turso organization/database identity before adding its marker; never point this app at production.
-For local JSON rehearsal use `npm run staging:local -- seed ./staging-rehearsal.db` and the documented fixture marker `kiokudo-local-json-fixture-not-production-v1`.
-
-## Implemented staging REST API
-
-| Method | Endpoint | Behavior |
-| --- | --- | --- |
-| GET | `/api/v1/health` | Public process liveness only |
-| GET | `/api/v1/status` | Authenticated migration status |
-| GET | `/api/v1/cards` | Read-only cards, decks and summaries |
-| POST | `/api/v1/reviews` | Canonical FSRS state transition in atomic transaction |
-| POST | `/api/v1/reviews/batch` | Chronological offline event replay in one transaction |
-
-All except health require `Authorization: Bearer <KIOKUDO_SERVICE_TOKEN>`.
-No browser directly calls core; the future authenticated Kiokudo Web BFF owns this service credential.
-
-For review replay supply a stable `eventId`, a real DB `cardId`, `rating` and `reviewedAt`.
-Repeated `eventId` with matching identity returns `duplicate` without a second mutation. Conflicts return 409.
-Client-provided `scheduledDays` is ignored. No user-facing Add Card.
-
-## Verify
-
-```bash
 npm run check
 npm test
-python3 -m unittest discover -s tests_py -p 'test_*.py' -v
 npm run build
 ```
 
-## Migration safety
-
-See [Migration Gates](docs/MIGRATION.md), [offline staging clone rehearsal](docs/OFFLINE_CLONE_REHEARSAL.md), [DB staging identity and read-only snapshot audit](docs/DB_SNAPSHOT_PARITY.md), [FSRS reference parity scope](docs/FSRS_PARITY_SCOPE.md), [schema review](migrations/README.md), and [OpenAPI contract](contracts/openapi.yaml).
-
-**Not yet migrated:** IELTS, Grammar/JPD133 special-case creation parity, Google OAuth, media, staging Turso data reconciliation, FE real-data integration and production cutover.
+Staging safety: configure `KIOKUDO_DATABASE_SCOPE=staging`, DB URL, verified staging marker, service bearer, and signed single-owner assertion. Migrations are operator-only, not automatically executed, and **production database content must not be modified** for this removal. `contracts/openapi.yaml` documents the retained route surface. `npm run staging:local -- seed ./staging-rehearsal.db` creates isolated historical fixtures to validate data parity, not a flashcard service.

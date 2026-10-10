@@ -117,7 +117,7 @@ test('IELTS dashboard shows zero real progress instead of legacy invented demo s
  }finally{await app.close();await cx.close();}
 });
 
-test('IELTS reads recorded sessions and rejects write operations',async()=>{
+test('IELTS reads recorded sessions and validates writes',async()=>{
  const cx=await setup(),app=buildApp({serviceToken:token,database:cx});
  try{
   await cx.client.execute({sql:`INSERT INTO eng_materials
@@ -136,8 +136,11 @@ test('IELTS reads recorded sessions and rejects write operations',async()=>{
   assert.equal(session.statusCode,200,session.body);
   assert.equal(session.json().data.id,'session1');
   assert.equal((await go(app,'/api/v1/ielts/sessions/unknown')).statusCode,404);
-  for(const path of ['/api/v1/ielts/sessions','/api/v1/ielts/materials','/api/v1/ielts/vocab']){
-   assert.equal((await app.inject({method:'POST',url:path,headers:fixtureHeaders('POST',path,token),payload:{}})).statusCode,404);
+  for(const path of ['/api/v1/ielts/sessions','/api/v1/ielts/vocab']){
+   assert.equal((await app.inject({method:'POST',url:path,headers:fixtureHeaders('POST',path,token),payload:{}})).statusCode,400);
   }
+  const noMaterialWrite='/api/v1/ielts/materials';
+  assert.equal((await app.inject({method:'POST',url:noMaterialWrite,
+    headers:fixtureHeaders('POST',noMaterialWrite,token),payload:{}})).statusCode,404);
  }finally{await app.close();await cx.close();}
 });

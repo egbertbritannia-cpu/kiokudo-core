@@ -113,7 +113,7 @@ class CloneRehearsalTests(unittest.TestCase):
 
     def test_rejects_uncheckpointed_wal_sidecar(self):
         (self.folder / "baseline.db-wal").write_bytes(b"uncheckpointed-wal")
-        with self.assertRaisesRegex(ValueError, "WAL/SHM"):
+        with self.assertRaisesRegex(ValueError, "snapshot sidecar"):
             self.clone()
         self.assertFalse(self.out.exists())
         self.assertEqual(local_clone.file_digest(self.src), self.sha)
