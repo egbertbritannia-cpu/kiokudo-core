@@ -365,3 +365,19 @@ export const ieltsMutationState = sqliteTable('kiokudo_ielts_mutation_state', {
   lastResponse: text('last_response').notNull(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),
 });
+
+
+// Review undo: snapshot BEFORE each canonical grade, plus permanent replay tombstone.
+// Both use the immutable client eventId. Staging-only additive migration required.
+export const reviewUndoSnapshots = sqliteTable('kiokudo_review_undo_snapshots', {
+  eventId: text('event_id').primaryKey(),
+  cardId: text('card_id').notNull().references(() => cards.id, { onDelete: 'cascade' }),
+  beforeJson: text('before_json').notNull(),
+  reviewedAt: integer('reviewed_at', { mode: 'timestamp' }).notNull(),
+});
+
+export const reviewUndoTombstones = sqliteTable('kiokudo_review_undo_tombstones', {
+  eventId: text('event_id').primaryKey(),
+  cardId: text('card_id').notNull(),
+  undoneAt: integer('undone_at', { mode: 'timestamp' }).notNull(),
+});
