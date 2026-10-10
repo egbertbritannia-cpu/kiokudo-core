@@ -187,3 +187,20 @@ const result = await post(`/api/v1/ielts/sessions/${sessionId}/submit`,{
 3. Operator must explicitly verify one-owner staging dataset, signed principal, HTTPS Core origin, edge login throttle, and secrets configured only in private dashboards. Browser write flag OFF until then.
 4. No real production snapshots, DB exports, migration, cloud writes, rollback rehearsal or public deployment are performed by this implementation.
 5. **Progress checkpoint:** code on unmerged feature branches is `IMPLEMENTED_UNVERIFIED`, never `DONE_VERIFIED`. Feature completion still requires end-to-end acceptance and matching schema version.
+
+
+### `PUT /api/v1/ielts/sessions/{id}/score` — điểm do người học nhập (manual)
+
+Chỉ cho phiên đã `completed|reviewed`, loại `Reading|Listening`. Body:
+```json
+{"requestId":"stable_uuid","expectedRevision":2,"rawScore":32,"band":7.5,"source":"manual"}
+```
+Response `200 {"success":true,"status":"manual_score_saved","requestId":"stable_uuid","data":{"sessionId":"...","revision":3,"rawScore":32,"band":7.5,"source":"manual","sessionStatus":"reviewed"}}`. No AI/generated band is written: the client explicitly submits a user-entered raw score and a calculated **estimate**; provenance is `manual`. `409 score_requires_submission|raw_score_not_supported_for_section|revision_conflict`; `503` missing additive migration. Lost reply is retried with SAME `requestId`.
+
+### `PUT /api/v1/ielts/mistakes/{id}` — sửa lỗi đã lưu
+
+Body `{"sessionId":"...","category":"Vocabulary","rootCause":"...","actionPlan":"..."}`. Returns `200 {"success":true,"status":"updated","data":{"id":"..."}}`; `404 mistake_not_found` or 400 invalid body. Existing row is validated against provided session before update. To create: POST `/api/v1/ielts/mistakes` with stable ID and optional `logId` referencing a real question log in same session; identical duplicate create returns `200 status='duplicate'` to recover lost acknowledgements. POST vocab behaves likewise for an identical stable record ID; both preserve real user-supplied fields.
+
+## 8. Machine-readable endpoint registry
+
+Complete `28` declared Web-auth/Core routes (all methods and paths including these new endpoints) are enumerated in [API_ENDPOINTS.yaml](API_ENDPOINTS.yaml). The YAML index and this Markdown file must be updated **together** whenever endpoints change. This contract was authored from feature-branch source, not from an executed test or verified deployment.
