@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS kiokudo_ielts_mutation_state (
   session_id TEXT PRIMARY KEY NOT NULL REFERENCES ielts_sessions(id) ON DELETE CASCADE,
   revision INTEGER NOT NULL DEFAULT 0 CHECK(revision >= 0),
   last_request_id TEXT NOT NULL,
+  score_source TEXT CHECK(score_source IS NULL OR score_source = 'manual'),
   last_response TEXT NOT NULL,
   updated_at INTEGER NOT NULL
 );

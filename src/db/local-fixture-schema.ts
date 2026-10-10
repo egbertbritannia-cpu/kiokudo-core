@@ -26,4 +26,13 @@ export async function createLocalFixtureSchema(client: Client): Promise<void> {
     last_elapsed_days INTEGER NOT NULL, scheduled_days INTEGER NOT NULL,
     review_time INTEGER NOT NULL
   )`);
+  await client.execute(`CREATE TABLE kiokudo_review_undo_snapshots (
+    event_id TEXT PRIMARY KEY NOT NULL,
+    card_id TEXT NOT NULL REFERENCES cards(id),
+    before_json TEXT NOT NULL,
+    reviewed_at INTEGER NOT NULL
+  )`);
+  await client.execute(`CREATE TABLE kiokudo_review_undo_tombstones (
+    event_id TEXT PRIMARY KEY NOT NULL,card_id TEXT NOT NULL,undone_at INTEGER NOT NULL
+  )`);
 }

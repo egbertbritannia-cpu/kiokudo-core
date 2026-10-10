@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { asc, desc, eq } from 'drizzle-orm';
 import type { Database } from '../db/client.js';
 import {
-  engMaterials, engVocab, ieltsMistakes, ieltsPracticeLogs, ieltsSessions,
+  engMaterials, engVocab, ieltsMistakes, ieltsPracticeLogs, ieltsSessions, ieltsMutationState,
 } from '../db/schema.js';
 
 const unavailable={error:'staging_database_not_configured'};
@@ -89,7 +89,17 @@ export function registerIeltsReadRoutes(app:FastifyInstance,db?:Database){
           .orderBy(asc(ieltsPracticeLogs.questionNumber)),
         db.select().from(ieltsMistakes).where(eq(ieltsMistakes.sessionId,session.id)),
       ]);
-      return reply.header('Cache-Control','private, no-store').send({success:true,data:{...session,logs,mistakes}});
+      let revision: number | null = null;
+      let scoreSource: string | null = null;
+      // Historic imported sessions may predate the additive mutation table.
+      // Reads keep working; writes require a provisioned revision state.
+      try {
+        const [row]=await db.select({revision:ieltsMutationState.revision,scoreSource:ieltsMutationState.scoreSource})
+          .from(ieltsMutationState).where(eq(ieltsMutationState.sessionId,session.id)).limit(1);
+        revision=row?.revision??null;
+        scoreSource=row?.scoreSource??null;
+      } catch { /* unprovisioned migration stays read-only */ }
+      return reply.header('Cache-Control','private, no-store').send({success:true,data:{...session,logs,mistakes,revision,scoreSource}});
     }catch(err){app.log.error({err},'IELTS session detail failed');return reply.code(503).send({error:'ielts_staging_schema_unavailable'});}
   });
   app.get('/api/v1/ielts/vocab',async(_req,reply)=>{
