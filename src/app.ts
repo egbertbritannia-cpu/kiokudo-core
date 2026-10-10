@@ -69,7 +69,7 @@ export function buildApp(options: AppOptions = {}) {
 
   app.get('/api/v1/status', async () => ({
     service:'kiokudo-core', phase:'learning-modules-staging',
-    businessApisReady: Boolean(db),
+    businessApisReady:false, // migration and staging acceptance remain incomplete
     flashcardApisAvailable: false,
     productionCutoverAllowed:false,
   }));
