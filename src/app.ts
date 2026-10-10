@@ -5,6 +5,7 @@ import { registerCardsRoutes } from './routes/cards.js';
 import { registerGrammarRoutes } from './routes/grammar.js';
 import { registerIeltsReadRoutes } from './routes/ielts.js';
 import { verifyStagingDatabaseIdentity } from './db/staging-identity.js';
+import { verifySingleOwnerRequest } from './auth/single-owner.js';
 
 export interface AppOptions {
   serviceToken?: string;
@@ -36,10 +37,29 @@ export function buildApp(options: AppOptions = {}) {
   }
 
   app.addHook('onRequest', async (request, reply) => {
-    if (request.url.split('?')[0] === '/api/v1/health') return;
+    const path = request.url.split('?')[0];
+    if (path === '/api/v1/health') return;
+    // A service credential authenticates Web as a service, NOT a learner.
     const auth = request.headers.authorization;
-    if (auth !== `Bearer ${serviceToken}`) {
+    if (auth !== 'Bearer ' + serviceToken) {
       return reply.code(401).send({ error: 'unauthorized' });
+    }
+    // Infrastructure status does not expose learner data or perform mutations.
+    if (path === '/api/v1/status' && request.method === 'GET') return;
+
+    // Every private Core route is bound to a signed, short-lived owner
+    // assertion matching the *actual* HTTP method and original URL.
+    const decision = verifySingleOwnerRequest(
+      request.headers['x-kiokudo-owner-assertion'], request.method, request.url,
+    );
+    if (decision === 'not_configured') {
+      return reply.code(503).send({ error: 'owner_auth_not_configured' });
+    }
+    if (decision === 'writes_disabled') {
+      return reply.code(403).send({ error: 'staging_writes_disabled' });
+    }
+    if (decision !== 'ok') {
+      return reply.code(401).send({ error: 'owner_unauthorized' });
     }
   });
 
