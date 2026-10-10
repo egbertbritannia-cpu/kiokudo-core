@@ -1,0 +1,208 @@
+# Complete declared Web/Core integration endpoint index for P01-P04 (untested draft).
+# Canonical detailed examples: docs/API_CONTRACT_PHASE_01_04.md
+schemaVersion: "2026-10-10-p01-p04-draft"
+implementationStatus: "CODE_WRITTEN_NOT_TESTED"
+productionReady: false
+transport:
+  browserBase: "/api/backend"
+  coreBase: "/api/v1"
+  browserCredentials: "same-origin HttpOnly single-owner session"
+  coreCredentials: "service Bearer plus signed x-kiokudo-owner-assertion"
+  writeGates:
+    web: "KIOKUDO_WEB_STAGING_WRITES_ENABLED=true"
+    core: "KIOKUDO_STAGING_WRITE_ENABLED=true"
+    mapping: "KIOKUDO_MAPPING_IMPORT_ENABLED=true"
+  notes:
+    - "Do not expose Core secrets in browser."
+    - "Core routes available only after verified staging migration and owner provenance."
+webAuthEndpoints:
+  - method: POST
+    path: "/api/auth/login"
+    body: '{"password":"..."}'
+    response: '{"authenticated":true}'
+    security: "trusted Origin + configured async scrypt + public ingress rate-limit ACK"
+  - method: POST
+    path: "/api/auth/logout"
+    body: "{}"
+    response: '{"authenticated":false}'
+    security: "trusted Origin"
+  - method: GET
+    path: "/api/auth/session"
+    response: '{"authenticated":true,"ownerKey":"owner"}'
+    security: "signed HttpOnly cookie; ownerKey is cache partition only"
+coreEndpoints:
+  - method: GET
+    path: "/api/v1/health"
+    phase: "infra"
+    security: "public"
+    browserAccess: "Core only"
+    request: "liveness"
+    response: "ok"
+  - method: GET
+    path: "/api/v1/status"
+    phase: "infra"
+    security: "service"
+    browserAccess: "BFF GET"
+    request: "service status"
+    response: "ok"
+  - method: GET
+    path: "/api/v1/cards"
+    phase: "p02"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "deck? search? limit<=2000"
+    response: "{success,data,decks}"
+  - method: POST
+    path: "/api/v1/reviews"
+    phase: "p02"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "eventId cardId rating reviewedAt responseTimeMs?"
+    response: "{success,status,eventId,data}"
+  - method: POST
+    path: "/api/v1/reviews/batch"
+    phase: "p02"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "reviews[1..200]"
+    response: "{success,processedCount,rejectedCount,results}"
+  - method: POST
+    path: "/api/v1/reviews/{eventId}/undo"
+    phase: "p02"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "{}"
+    response: "{success,status,eventId,cardId}"
+  - method: GET
+    path: "/api/v1/grammar"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "none"
+    response: "{lessons,patterns,stats}"
+  - method: GET
+    path: "/api/v1/grammar/{lessonId}"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "lessonId"
+    response: "lesson+patterns"
+  - method: GET
+    path: "/api/v1/grammar/practice"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "lessonId? limit<=200"
+    response: "{total,lessonId,exercises}"
+  - method: POST
+    path: "/api/v1/grammar/practice/attempts"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "eventId exerciseId answer answeredAt"
+    response: "{success,eventId,status,data}"
+  - method: GET
+    path: "/api/v1/curriculum/jpd133/mappings"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "slot?"
+    response: "{success,data:[{sourceKey,slotNumber,sourcePage,cardId}]}"
+  - method: POST
+    path: "/api/v1/curriculum/jpd133/mappings"
+    phase: "p04"
+    security: "operator-import"
+    browserAccess: "BFF opt-in"
+    request: "sourceKey slotNumber sourcePage cardId"
+    response: "{success,status,data}"
+  - method: GET
+    path: "/api/v1/ielts/dashboard"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "none"
+    response: "{success,data}"
+  - method: GET
+    path: "/api/v1/ielts/materials"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "none"
+    response: "{success,data}"
+  - method: GET
+    path: "/api/v1/ielts/sessions"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "limit<=100"
+    response: "{success,data}"
+  - method: GET
+    path: "/api/v1/ielts/sessions/{id}"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "session id"
+    response: "{success,data:{session,logs,mistakes,revision}}"
+  - method: POST
+    path: "/api/v1/ielts/sessions"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "sessionId section testType materialId? testNumber?"
+    response: "{success,status,data:{id,revision,sessionStatus}}"
+  - method: PUT
+    path: "/api/v1/ielts/sessions/{id}/draft"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "requestId expectedRevision answers[]"
+    response: "{success,status,requestId,data:{sessionId,revision,sessionStatus}}"
+  - method: POST
+    path: "/api/v1/ielts/sessions/{id}/submit"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "requestId expectedRevision"
+    response: "{success,status,requestId,data:{sessionId,revision,sessionStatus}}"
+  - method: PUT
+    path: "/api/v1/ielts/sessions/{id}/score"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "requestId expectedRevision rawScore band source:manual"
+    response: "{success,status,requestId,data:{sessionId,revision,source}}"
+  - method: GET
+    path: "/api/v1/ielts/mistakes"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "none"
+    response: "{success,data}"
+  - method: POST
+    path: "/api/v1/ielts/mistakes"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "id sessionId logId? category? rootCause? actionPlan?"
+    response: "{success,status?,data:{id}}"
+  - method: PUT
+    path: "/api/v1/ielts/mistakes/{id}"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "sessionId category rootCause actionPlan"
+    response: "{success,status:updated,data:{id}}"
+  - method: GET
+    path: "/api/v1/ielts/vocab"
+    phase: "p04"
+    security: "owner-read"
+    browserAccess: "BFF GET"
+    request: "none"
+    response: "{success,data}"
+  - method: POST
+    path: "/api/v1/ielts/vocab"
+    phase: "p04"
+    security: "owner-write"
+    browserAccess: "BFF opt-in"
+    request: "id sessionId? word meaning? partOfSpeech? phonetic? contextSentence?"
+    response: "{success,status?,data:{id}}"
