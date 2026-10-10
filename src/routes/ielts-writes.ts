@@ -129,6 +129,7 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
     if(!db)return reply.code(503).send(error('staging_database_not_configured'));
     const p=obj(req.body);
     if(!p||!id(p.id)||!id(p.sessionId)||
+       (p.logId!==undefined&&p.logId!==null&&!id(p.logId))||
        (p.category!==undefined&&(typeof p.category!=='string'||p.category.length>80))||
        (p.rootCause!==undefined&&(typeof p.rootCause!=='string'||p.rootCause.length>4000))){
       return reply.code(400).send(error('invalid_mistake'));
@@ -138,7 +139,13 @@ export function registerIeltsWriteRoutes(app:FastifyInstance,db?:Database) {
       if(prior)return reply.code(409).send(error('duplicate_mistake_id'));
       const [session]=await db.select().from(ieltsSessions).where(eq(ieltsSessions.id,p.sessionId as string)).limit(1);
       if(!session)return reply.code(404).send(error('session_not_found'));
+      if(p.logId){
+        const [log]=await db.select().from(ieltsPracticeLogs)
+          .where(eq(ieltsPracticeLogs.id,p.logId as string)).limit(1);
+        if(!log||log.sessionId!==p.sessionId)return reply.code(404).send(error('question_log_not_found'));
+      }
       await db.insert(ieltsMistakes).values({id:p.id as string,sessionId:p.sessionId as string,
+        logId:(p.logId as string|undefined)??null,
         mistakeCategory:(p.category as string|undefined)??null,
         rootCauseAnalysis:(p.rootCause as string|undefined)??null,
         actionPlanForImprovement:(p.actionPlan as string|undefined)??null,
