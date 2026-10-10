@@ -12,7 +12,8 @@
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
-    "staging:local": "tsx scripts/seed-local-staging.ts"
+    "staging:local": "tsx scripts/seed-local-staging.ts",
+    "test:phase1": "node --import tsx --test tests/owner-authorization.test.ts"
   },
   "dependencies": {
     "fastify": "^5.6.1",
