@@ -26,6 +26,11 @@ def connect_read_only(path: str):
     db = Path(path).resolve(strict=True)
     if not db.is_file() or db.suffix not in {".sqlite", ".db", ".sqlite3"}:
         raise ValueError("Snapshot must be an existing .sqlite/.db/.sqlite3 file")
+    # Immutable snapshots MUST be checkpointed exports without sidecars; reading
+    # uncheckpointed main.db with immutable=1 silently ignores the WAL.
+    for suffix in ("-wal", "-shm", "-journal"):
+        if Path(str(db) + suffix).exists():
+            raise ValueError("Uncheckpointed or active SQLite snapshot sidecar: " + suffix)
     # immutable mode avoids applying WAL/journal; requires exported, checkpointed copy.
     uri = "file:" + quote(str(db), safe="/") + "?mode=ro&immutable=1"
     cx = sqlite3.connect(uri, uri=True)
@@ -75,6 +80,20 @@ def inspect(path: str):
             )
         ]
         issues = []
+        # Both DBs could otherwise share identical broken orphan rows and pass.
+        integrity = cx.execute("PRAGMA integrity_check").fetchall()
+        if integrity != [("ok",)]:
+            issues.append("SQLite integrity_check failed")
+        if cx.execute("PRAGMA foreign_key_check").fetchone() is not None:
+            issues.append("SQLite foreign_key_check failed")
+        identity_rows = []
+        if "kiokudo_deployment_identity" in tables:
+            try:
+                identity_rows = cx.execute(
+                    "SELECT environment, marker FROM kiokudo_deployment_identity"
+                ).fetchall()
+            except sqlite3.Error:
+                issues.append("Invalid staging deployment identity schema")
         if not MANDATORY.issubset(tables):
             issues.append("Missing required tables: " + ",".join(sorted(MANDATORY - set(tables))))
         result = {}
@@ -111,6 +130,11 @@ def inspect(path: str):
             "file_name": file.name, "file_sha256": file_sha.hexdigest(),
             "tables": result, "issues": issues, "schema_objects": schema_objects,
             "staging_identity_table_present": "kiokudo_deployment_identity" in tables,
+            "staging_identity_environment_valid": (
+                len(identity_rows) == 1 and identity_rows[0][0] == "staging"
+                and isinstance(identity_rows[0][1], str)
+                and len(identity_rows[0][1].strip()) >= 24
+            ),
         }
     finally:
         cx.close()
@@ -135,8 +159,12 @@ def compare(baseline: dict, candidate: dict):
                 diffs.append(diff)
     if baseline["schema_objects"] != candidate["schema_objects"]:
         diffs.append({"table": "*", "kind": "schema_objects"})
+    if baseline["staging_identity_table_present"]:
+        diffs.append({"table": "kiokudo_deployment_identity", "kind": "baseline_marked_as_staging"})
     if not candidate["staging_identity_table_present"]:
         diffs.append({"table": "kiokudo_deployment_identity", "kind": "staging_marker_table_missing"})
+    elif not candidate["staging_identity_environment_valid"]:
+        diffs.append({"table": "kiokudo_deployment_identity", "kind": "staging_marker_invalid"})
     return {
         "passed": not diffs and not baseline["issues"] and not candidate["issues"],
         "baseline": {
@@ -151,6 +179,7 @@ def compare(baseline: dict, candidate: dict):
                        for k, v in dest_tables.items()},
             "issues": candidate["issues"],
             "staging_identity_table_present": candidate["staging_identity_table_present"],
+            "staging_identity_environment_valid": candidate["staging_identity_environment_valid"],
         },
         "differences": diffs,
     }
@@ -164,6 +193,8 @@ def main():
     args = parser.parse_args()
     try:
         baseline = inspect(args.baseline)
+        if Path(args.baseline).resolve() == Path(args.staging).resolve():
+            raise ValueError("Baseline and staging cannot be the same file")
         candidate = inspect(args.staging)
         report = compare(baseline, candidate)
         out = Path(args.report)
